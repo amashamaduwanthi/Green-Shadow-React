@@ -9,6 +9,7 @@ import {Log} from "./pages/log.tsx";
 import {Crop} from "./pages/crop.tsx";
 import {store} from "./redux/store.ts";
 import {Provider} from "react-redux";
+import {AddStaffMember} from "./pages/AddStaffMember.tsx";
 
 function App() {
     const routes=createBrowserRouter([
@@ -18,6 +19,7 @@ function App() {
             children:[
                 {path:'',element:<Dashboard/>},
                 {path:'/staff',element:<Staff/>},
+                       {path:'/staff/Add',element:<AddStaffMember/>},
                 {path:'/field',element:<Field/>},
                 {path:'/crop',element:<Crop/>},
                 {path:'/equipment',element:<Equipment/>},
