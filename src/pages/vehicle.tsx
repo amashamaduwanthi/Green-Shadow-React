@@ -1,8 +1,12 @@
+import {Link} from "react-router";
+
 export function Vehicle() {
     return (
         <>
             <br/>
-            Vehicle
+            <h1>Vehicle</h1>
+            <Link to='/vehicle/Add'><button>Add Vehicle</button></Link>
         </>
+
     )
 }

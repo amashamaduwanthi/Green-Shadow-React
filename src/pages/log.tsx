@@ -1,9 +1,13 @@
+import {Link} from "react-router";
+
 export function Log(){
     return (
         <>
             <br/>
 
-            Log
+           <h1>MonitoringLog</h1>
+            <Link to='/log/Add'><button>Add Vehicle</button></Link>
+
         </>
     )
 }
