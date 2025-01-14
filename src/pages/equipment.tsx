@@ -28,7 +28,7 @@ export function Equipment(){
                 <input type="text" placeholder="enter the Equipment Name" value={deleteEquipmentName}
                        onChange={(e) => setDeleteEquipmentName(e.target.value)}/>
 
-                <button onClick={handleDeleteEquipment}>Delete Crop</button>
+                <button onClick={handleDeleteEquipment}>Delete Euipment</button>
                 <br/>
                 <ul>
                     {equipment.map((equipmentDetails: any, index: number) => (

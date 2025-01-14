@@ -8,10 +8,10 @@ const FieldSlice = createSlice({
         addNewField:(state,action)=>{
             state.push(action.payload);
         },
-        deleteCrop:(state,action)=>{
-            return state.filter(crop => crop.cropId !== action.payload);
+        deleteField:(state,action)=>{
+            return state.filter(field => field.fieldName !== action.payload);
         }
     }
 });
 export default FieldSlice.reducer;
-export const {addNewField,deleteCrop} = FieldSlice.actions;
+export const {addNewField,deleteField} = FieldSlice.actions;
