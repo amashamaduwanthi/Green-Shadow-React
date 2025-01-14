@@ -46,7 +46,7 @@ export function AddNewMonitoringLog(){
                     <label>Staff Id: <input type="text" name="staff_id" value={staffId}
                                             onChange={(e) => setStaffId(e.target.value)}/></label><br/>
 
-                    <button type="submit" onClick={handleSubmitLog}>Add Equipment</button>
+                    <button type="submit" onClick={handleSubmitLog}>Add Log</button>
                 </form>
             </div>
             <ul>
