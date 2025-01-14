@@ -6,6 +6,7 @@ import fieldSlice from "./slices/fieldSlice.ts";
 
 import logSlice from "./slices/logSlice.ts";
 import vehicleSlice from "./slices/vehicleSlice.ts";
+import staffSlice from "./slices/staffSlice.ts";
 
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
       field:fieldSlice,
       Log:logSlice,
       vehicle:vehicleSlice,
+      staff:staffSlice,
   },
 });
 
