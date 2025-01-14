@@ -7,9 +7,12 @@ const VehicleSlice = createSlice({
     reducers:{
         addNewVehicle: (state, action) => {
             state.push( action.payload) ;
+        },
+        deleteVehicle: (state, action) => {
+            return state.filter( vehicle => vehicle.LicensePlateNumber !== action.payload );
         }
     }
 
 })
 export default VehicleSlice.reducer;
-export const {addNewVehicle} = VehicleSlice.actions;
+export const {addNewVehicle,deleteVehicle} = VehicleSlice.actions;

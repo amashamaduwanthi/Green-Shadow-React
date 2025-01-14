@@ -1,6 +1,22 @@
 import {Link} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import {deleteVehicle} from "../redux/slices/vehicleSlice.ts";
 
 export function Vehicle() {
+    const vehicle = useSelector((state:any) => state.vehicle);
+    const dispatch = useDispatch();
+    const [deleteVehicleId, setDeleteVehicleId] = useState('');
+
+    function handleDeleteVehicle(event:React.FormEvent){
+        event.preventDefault();
+        if(!deleteVehicleId){
+            alert("Vehicle not found.");
+        }
+        dispatch(deleteVehicle(deleteVehicleId));
+        alert("Vehicle deleted successfully.");
+    }
+
     return (
         <>
             <br/>
@@ -9,8 +25,20 @@ export function Vehicle() {
                 <Link to='/vehicle/Add'>
                     <button>Add Vehicle</button>
                 </Link>
-            </div>
-            </>
+                <input type="text" placeholder="enter the License Plate Number" value={deleteVehicleId}
+                       onChange={(e) => setDeleteVehicleId(e.target.value)}/>
 
-            )
-            }
+                <button onClick={handleDeleteVehicle}>Delete Vehicle</button>
+                <br/>
+                <ul>
+                    {vehicle.map((vehicleDetails: any, index: number) => (
+                        <li key={index}>
+                            {vehicleDetails.VehicleCode}, {vehicleDetails.LicensePlateNumber},{vehicleDetails.category},{vehicleDetails.FuelType},{vehicleDetails.Status},{vehicleDetails.staffId},{vehicleDetails.Remarks}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
+
+    )
+}

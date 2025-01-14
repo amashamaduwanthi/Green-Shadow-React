@@ -46,7 +46,7 @@ export function AddNewVehicle (){
                     <label>Remarks: <input type="text" name="Remarks" value={Remarks}
                                            onChange={(e) => setRemarks(e.target.value)}/></label><br/>
 
-                    <button type="submit" onClick={handleSubmitVehicle}>Add Equipment</button>
+                    <button type="submit" onClick={handleSubmitVehicle}>Add Vehicle</button>
                 </form>
             </div>
             <ul>

@@ -32,7 +32,7 @@ export function Staff() {
                 <input type="text" placeholder="enter the Staff Id" value={deleteStaffId}
                        onChange={(e) => setDeleteStaffId(e.target.value)}/>
 
-                <button onClick={handleDeleteStaffMember}>Delete Log</button>
+                <button onClick={handleDeleteStaffMember}>Delete Staff</button>
                 <br/>
                 <ul>
                     {staff.map((staffDetails: any, index: number) => (
