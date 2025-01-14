@@ -7,9 +7,12 @@ const StaffSlice = createSlice({
     reducers:{
         addNewStaff: (state, action) => {
             state.push( action.payload) ;
+        },
+        deleteStaff: (state, action) => {
+            return state.filter( staff => staff.staffId !== action.payload );
         }
     }
 
 })
 export default StaffSlice.reducer;
-export const {addNewStaff} = StaffSlice.actions;
+export const {addNewStaff,deleteStaff} = StaffSlice.actions;
