@@ -34,7 +34,7 @@ export function AddNewCrop() {
     return (
         <>
             <br/>
-            <div>
+            <div className="bg-white shadow-md rounded-lg p-6 m-4">
                 <h2>Add New Crop</h2>
                 <form>
                     <label>Crop ID: <input type="text" name="crop_id" value={cropId}
