@@ -8,10 +8,10 @@ const EquipmentSlice = createSlice({
         addNewEquipment:(state,action)=>{
             state.push(action.payload);
         },
-        deleteCrop:(state,action)=>{
-            return state.filter(crop => crop.cropId !== action.payload);
+        deleteEquipment:(state,action)=>{
+            return state.filter(equipment => equipment.Name !== action.payload);
         }
     }
 });
 export default EquipmentSlice.reducer;
-export const {addNewEquipment,deleteCrop} = EquipmentSlice.actions;
+export const {addNewEquipment,deleteEquipment} = EquipmentSlice.actions;
