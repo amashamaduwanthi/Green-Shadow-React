@@ -1,14 +1,11 @@
 
 import { configureStore } from '@reduxjs/toolkit';
-import customerReducer from './slices/customerSlice';
-import itemReducer from './slices/itemSlice';
-import orderReducer from './slices/orderSlice';
+import cropSlice from "./slices/cropSlice.ts";
+
 
 export const store = configureStore({
   reducer: {
-    customers: customerReducer,
-    items: itemReducer,
-    orders: orderReducer,
+       crop:cropSlice,
   },
 });
 

@@ -15,6 +15,8 @@ import {AddNewCrop} from "./pages/AddNewCrop.tsx";
 import {AddNewEquipment} from "./pages/AddNewEquipment.tsx";
 import {AddNewVehicle} from "./pages/AddNewVehicle.tsx";
 import {AddNewMonitoringLog} from "./pages/AddNewMonitoringLog.tsx";
+import './App.css'
+
 
 function App() {
     const routes=createBrowserRouter([
