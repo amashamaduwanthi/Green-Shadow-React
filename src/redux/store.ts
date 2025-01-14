@@ -5,6 +5,7 @@ import equipmentSlice from "./slices/equipmentSlice.ts";
 import fieldSlice from "./slices/fieldSlice.ts";
 
 import logSlice from "./slices/logSlice.ts";
+import vehicleSlice from "./slices/vehicleSlice.ts";
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
       equipment:equipmentSlice,
       field:fieldSlice,
       Log:logSlice,
+      vehicle:vehicleSlice,
   },
 });
 
