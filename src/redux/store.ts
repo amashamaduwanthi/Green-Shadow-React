@@ -2,12 +2,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cropSlice from "./slices/cropSlice.ts";
 import equipmentSlice from "./slices/equipmentSlice.ts";
+import fieldSlice from "./slices/fieldSlice.ts";
 
 
 export const store = configureStore({
   reducer: {
        crop:cropSlice,
-      equipment:equipmentSlice
+      equipment:equipmentSlice,
+      field:fieldSlice,
   },
 });
 
