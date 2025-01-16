@@ -2,6 +2,7 @@ import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {deleteCrop} from "../redux/slices/cropSlice.ts";
+import { GiPlantRoots } from "react-icons/gi";
 
 export function Crop(){
     const crop = useSelector((state:any)=>state.crop);
@@ -21,7 +22,9 @@ export function Crop(){
         <>
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
-                <h1 className="text-2xl font-bold text-teal-900 mb-6">Crop</h1>
+                <h1 className="text-2xl font-bold text-teal-900 mb-6 flex items-center gap-2">
+                    <GiPlantRoots className="text-teal-900"/> Crop
+                </h1>
 
                 {/* Add Crop Button */}
                 <Link to="/crop/Add">
