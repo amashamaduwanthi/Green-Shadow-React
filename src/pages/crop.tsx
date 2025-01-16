@@ -21,24 +21,44 @@ export function Crop(){
         <>
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
-                <h1 className="text-2xl font-bold text-gray-500 mb-6"> Crop</h1>
+                <h1 className="text-2xl font-bold text-teal-900 mb-6">Crop</h1>
+
+                {/* Add Crop Button */}
                 <Link to="/crop/Add">
-                    <button>Add Crop</button>
+                    <button
+                        className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition duration-300 mb-4">
+                        Add Crop
+                    </button>
                 </Link>
 
-                <input type="text" placeholder="enter the crop code" value={deleteCropCode}
-                       onChange={(e) => setDeleteCropCode(e.target.value)}/>
+                {/* Delete Crop Section */}
+                <div className="mb-6">
+                    <input
+                        type="text"
+                        placeholder="Enter the crop code to delete"
+                        value={deleteCropCode}
+                        onChange={(e) => setDeleteCropCode(e.target.value)}
+                        className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
+                    />
+                    <button
+                        onClick={handleDeleteCrop}
+                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
+                    >
+                        Delete Crop
+                    </button>
+                </div>
 
-                <button onClick={handleDeleteCrop}>Delete Crop</button>
-                <br/>
-                <ul>
+                {/* Crop List */}
+                <ul className="list-disc pl-6">
                     {crop.map((cropDetails: any, index: number) => (
-                        <li key={index}>
-                            {cropDetails.cropId}, {cropDetails.cropName},{cropDetails.scientificName},{cropDetails.image},{cropDetails.category},{cropDetails.season},{cropDetails.fieldCode}
+                        <li key={index} className="mb-2 text-gray-700">
+                            <span
+                                className="font-semibold">{cropDetails.cropId}</span> - {cropDetails.cropName}, {cropDetails.scientificName}, {cropDetails.image}, {cropDetails.category}, {cropDetails.season}, {cropDetails.fieldCode}
                         </li>
                     ))}
                 </ul>
             </div>
+
         </>
     )
 }

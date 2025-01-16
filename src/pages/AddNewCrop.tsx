@@ -34,32 +34,132 @@ export function AddNewCrop() {
     return (
         <>
             <br/>
-            <div className="bg-white shadow-md rounded-lg p-6 m-4">
-                <h2>Add New Crop</h2>
-                <form>
-                    <label>Crop ID: <input type="text" name="crop_id" value={cropId}
-                                           onChange={(e) => setCropId(e.target.value)}/></label><br/>
-                    <label>Crop Name: <input type="text" name="crop_name" value={cropName} onChange={(e) => setCropName(e.target.value)}/></label><br/>
-                    <label>Scientific Name: <input type="text" name="scientific_name" value={scientificName}
-                                                   onChange={(e) => setScientificName(e.target.value)}/></label><br/>
-                    <label>Image: <input type="text" name="image" value={image}
-                                         onChange={(e) => setImage(e.target.value)}/></label><br/>
-                    <label>Category: <input type="text" name="category" value={category}
-                                            onChange={(e) => setCategory(e.target.value)}/></label><br/>
-                    <label>Season: <input type="text" name="season" value={season}
-                                          onChange={(e) => setSeason(e.target.value)}/></label><br/>
-                    <label>Field Code: <input type="text" name="field_code" value={fieldCode}
-                                              onChange={(e) => setFieldCode(e.target.value)}/></label><br/>
-                    <button type="submit" onClick={handleSubmitCrop}>Add Crop</button>
-                </form>
+            <div className="flex flex-row justify-between items-start gap-2 pl-40">
+                {/* Form Section - Left Side */}
+                <div className="bg-white shadow-xl rounded-lg p-6 max-w-lg w-full">
+                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Add New Crop</h2>
+                    <form className="space-y-4 text-left">
+                        <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium">Crop ID:</label>
+                            <input
+                                type="text"
+                                name="crop_id"
+                                value={cropId}
+                                onChange={(e) => setCropId(e.target.value)}
+                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium">Crop Name:</label>
+                            <input
+                                type="text"
+                                name="crop_name"
+                                value={cropName}
+                                onChange={(e) => setCropName(e.target.value)}
+                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium">Scientific Name:</label>
+                            <input
+                                type="text"
+                                name="scientific_name"
+                                value={scientificName}
+                                onChange={(e) => setScientificName(e.target.value)}
+                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium">Image URL:</label>
+                            <input
+                                type="text"
+                                name="image"
+                                value={image}
+                                onChange={(e) => setImage(e.target.value)}
+                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium">Category:</label>
+                            <input
+                                type="text"
+                                name="category"
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium">Season:</label>
+                            <input
+                                type="text"
+                                name="season"
+                                value={season}
+                                onChange={(e) => setSeason(e.target.value)}
+                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium">Field Code:</label>
+                            <input
+                                type="text"
+                                name="field_code"
+                                value={fieldCode}
+                                onChange={(e) => setFieldCode(e.target.value)}
+                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="mt-4">
+                            <button
+                                type="submit"
+                                onClick={handleSubmitCrop}
+                                className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-500 transition duration-300"
+                            >
+                                Add Crop
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                {/* Table Section - Right Side */}
+                <div className="bg-white shadow-xl rounded-lg p-6 max-w-7xl w-full">
+                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Crop Details</h2>
+                    <table className="min-w-full table-auto border-collapse border border-gray-300">
+                        <thead>
+                        <tr className="bg-gray-100 border-b">
+                            <th className="px-4 py-2 text-left text-gray-700">Crop ID</th>
+                            <th className="px-4 py-2 text-left text-gray-700">Crop Name</th>
+                            <th className="px-4 py-2 text-left text-gray-700">Scientific Name</th>
+                            <th className="px-4 py-2 text-left text-gray-700">Image URL</th>
+                            <th className="px-4 py-2 text-left text-gray-700">Category</th>
+                            <th className="px-4 py-2 text-left text-gray-700">Season</th>
+                            <th className="px-4 py-2 text-left text-gray-700">Field Code</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {crop.map((cropDetails: any, index: number) => (
+                            <tr key={index} className="border-b">
+                                <td className="px-4 py-2">{cropDetails.cropId}</td>
+                                <td className="px-4 py-2">{cropDetails.cropName}</td>
+                                <td className="px-4 py-2">{cropDetails.scientificName}</td>
+                                <td className="px-4 py-2">{cropDetails.image}</td>
+                                <td className="px-4 py-2">{cropDetails.category}</td>
+                                <td className="px-4 py-2">{cropDetails.season}</td>
+                                <td className="px-4 py-2">{cropDetails.fieldCode}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <ul>
-                {crop.map((cropDetails: any, index: number) => (
-                    <li key={index}>
-                        {cropDetails.cropId}, {cropDetails.cropName},{cropDetails.scientificName},{cropDetails.image},{cropDetails.category},{cropDetails.season},{cropDetails.fieldCode}
-                    </li>
-                ))}
-            </ul>
+
         </>
     )
 }
