@@ -2,6 +2,7 @@ import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {deleteVehicle} from "../redux/slices/vehicleSlice.ts";
+import {GiPlantRoots} from "react-icons/gi";
 
 export function Vehicle() {
     const vehicle = useSelector((state:any) => state.vehicle);
@@ -21,14 +22,36 @@ export function Vehicle() {
         <>
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
-                <h1 className="text-2xl font-bold text-gray-500 mb-6">Vehicle</h1>
-                <Link to='/vehicle/Add'>
-                    <button>Add Vehicle</button>
-                </Link>
-                <input type="text" placeholder="enter the License Plate Number" value={deleteVehicleId}
-                       onChange={(e) => setDeleteVehicleId(e.target.value)}/>
+                <h1 className="text-2xl font-bold text-teal-900 mb-6 flex items-center gap-2">
+                    <GiPlantRoots className="text-teal-900"/> Vehicle
+                </h1>
 
-                <button onClick={handleDeleteVehicle}>Delete Vehicle</button>
+
+                <Link to="/vehicle/Add">
+                    <button
+                        className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition duration-300 mb-4">
+                        Add Vehicle
+                    </button>
+                </Link>
+
+                <br/>
+                <div className="mb-6">
+                    <input
+                        type="text"
+                        placeholder="Enter the License plate number"
+                        value={deleteVehicleId}
+                        onChange={(e) => setDeleteVehicleId(e.target.value)}
+                        className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
+                    />
+                    <br/>
+                    <button
+                        onClick={handleDeleteVehicle}
+                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
+                    >
+                        Delete Vehicle
+                    </button>
+                </div>
+
                 <br/>
                 <ul>
                     {vehicle.map((vehicleDetails: any, index: number) => (

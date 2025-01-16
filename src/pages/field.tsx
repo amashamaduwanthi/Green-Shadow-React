@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
 import {deleteField} from "../redux/slices/fieldSlice.ts";
+import {GiPlantRoots} from "react-icons/gi";
 
 export function Field() {
     const field = useSelector((state: any) => state.field);
@@ -23,15 +24,36 @@ export function Field() {
         <>
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
-                <h1 className="text-2xl font-bold text-gray-500 mb-6"> Field</h1>
+                <h1 className="text-2xl font-bold text-teal-900 mb-6 flex items-center gap-2">
+                    <GiPlantRoots className="text-teal-900"/> Field
+                </h1>
+
 
                 <Link to="/field/Add">
-                    <button>Add Filed</button>
+                    <button
+                        className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition duration-300 mb-4">
+                        Add Field
+                    </button>
                 </Link>
-                <input type="text" placeholder="enter the Field Name" value={deleteFieldName}
-                       onChange={(e) => setDeleteFieldName(e.target.value)}/>
 
-                <button onClick={handleDeleteField}>Delete Field</button>
+                <br/>
+                <div className="mb-6">
+                    <input
+                        type="text"
+                        placeholder="Enter the Field Name"
+                        value={deleteFieldName}
+                        onChange={(e) => setDeleteFieldName(e.target.value)}
+                        className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
+                    />
+                    <br/>
+                    <button
+                        onClick={handleDeleteField}
+                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
+                    >
+                        Delete Field
+                    </button>
+                </div>
+
                 <br/>
                 <ul>
                     {field.map((fieldDetails: any, index: number) => (
