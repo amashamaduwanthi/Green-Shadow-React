@@ -2,7 +2,7 @@ import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {deleteStaff} from "../redux/slices/staffSlice.ts";
-import {GiPlantRoots} from "react-icons/gi";
+
 
 export function Staff() {
     const staff = useSelector((state: any) => state.staff);
@@ -26,12 +26,13 @@ export function Staff() {
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
                 <h1 className="text-2xl font-bold text-teal-900 mb-6 flex items-center gap-2">
-                    <GiPlantRoots className="text-teal-900"/> Staff
+                    <i className="fas fa-user-tie text-blue-500 text-3xl"></i>
+                    Staff
                 </h1>
 
 
                 <Link to="/staff/Add">
-                    <button
+                <button
                         className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition duration-300 mb-4">
                         Add Staff
                     </button>

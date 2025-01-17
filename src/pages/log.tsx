@@ -2,7 +2,7 @@ import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {deleteLog} from "../redux/slices/logSlice.ts";
-import {GiPlantRoots} from "react-icons/gi";
+
 
 export function Log(){
     const log = useSelector((state: any) => state.Log);
@@ -16,6 +16,7 @@ export function Log(){
 
         }
         dispatch(deleteLog(deleteLogCode));
+        alert("Deleted Successfully.");
     }
 
     return (
@@ -23,7 +24,8 @@ export function Log(){
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
                 <h1 className="text-2xl font-bold text-teal-900 mb-6 flex items-center gap-2">
-                    <GiPlantRoots className="text-teal-900"/> Monitoring Log
+                    <i className="fas fa-clipboard-list text-green-500 text-3xl"></i>
+                    Monitoring Log
                 </h1>
 
 

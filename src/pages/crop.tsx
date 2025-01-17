@@ -2,7 +2,7 @@ import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {deleteCrop} from "../redux/slices/cropSlice.ts";
-import { GiPlantRoots } from "react-icons/gi";
+
 
 export function Crop(){
     const crop = useSelector((state:any)=>state.crop);
@@ -17,13 +17,16 @@ export function Crop(){
         dispatch(deleteCrop(deleteCropCode));
         setDeleteCropCode('');
     }
+    function handleSearch(){
+
+    }
 
     return (
         <>
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
                 <h1 className="text-2xl font-bold text-teal-900 mb-6 flex items-center gap-2">
-                    <GiPlantRoots className="text-teal-900"/> Crop
+                    <i className="fas fa-seedling text-green-500 text-3xl"></i> Crop
                 </h1>
 
                 {/* Add Crop Button */}
@@ -43,12 +46,23 @@ export function Crop(){
                         onChange={(e) => setDeleteCropCode(e.target.value)}
                         className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
                     />
-                    <button
-                        onClick={handleDeleteCrop}
-                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
-                    >
-                        Delete Crop
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleSearch}
+                            className="bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-blue-500"
+                        >
+                            Search
+                        </button>
+
+                        <button
+                            onClick={handleDeleteCrop}
+                            className="bg-red-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-red-500"
+                        >
+                            Delete Crop
+                        </button>
+                    </div>
+
+
                 </div>
 
                 {/* Crop List */}

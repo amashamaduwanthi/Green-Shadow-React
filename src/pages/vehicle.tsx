@@ -2,7 +2,7 @@ import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {deleteVehicle} from "../redux/slices/vehicleSlice.ts";
-import {GiPlantRoots} from "react-icons/gi";
+
 
 export function Vehicle() {
     const vehicle = useSelector((state:any) => state.vehicle);
@@ -23,12 +23,13 @@ export function Vehicle() {
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
                 <h1 className="text-2xl font-bold text-teal-900 mb-6 flex items-center gap-2">
-                    <GiPlantRoots className="text-teal-900"/> Vehicle
+                    <i className="fas fa-truck text-green-500 text-3xl"></i>
+                    Vehicle
                 </h1>
 
 
                 <Link to="/vehicle/Add">
-                    <button
+                <button
                         className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition duration-300 mb-4">
                         Add Vehicle
                     </button>

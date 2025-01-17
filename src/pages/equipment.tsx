@@ -2,7 +2,7 @@ import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {deleteEquipment} from "../redux/slices/equipmentSlice.ts";
-import {GiPlantRoots} from "react-icons/gi";
+
 
 export function Equipment(){
     const equipment = useSelector((state: any) => state.equipment);
@@ -15,6 +15,7 @@ export function Equipment(){
             alert("Equipment Not Found");
         }
         dispatch(deleteEquipment(deleteEquipmentName));
+        alert("Equipment Deleted");
     }
 
 
@@ -23,12 +24,13 @@ export function Equipment(){
             <br/>
             <div className="bg-white shadow-md rounded-lg p-6 m-4">
                 <h1 className="text-2xl font-bold text-teal-900 mb-6 flex items-center gap-2">
-                    <GiPlantRoots className="text-teal-900"/> Equipment
+                    <i className="fas fa-tools text-yellow-500 text-3xl"></i>
+                    Equipment
                 </h1>
 
 
                 <Link to="/equipment/Add">
-                    <button
+                <button
                         className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition duration-300 mb-4">
                         Add Equipment
                     </button>
