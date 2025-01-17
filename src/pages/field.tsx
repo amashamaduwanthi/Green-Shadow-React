@@ -19,6 +19,9 @@ export function Field() {
         dispatch(deleteField(deleteFieldName));
         alert("Deleted Successfully.");
     }
+    function handleSearchField(event:React.FormEvent) {
+        event.preventDefault();
+    }
 
 
     return (
@@ -48,12 +51,20 @@ export function Field() {
                         className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
                     />
                     <br/>
-                    <button
-                        onClick={handleDeleteField}
-                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
-                    >
-                        Delete Field
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleDeleteField}
+                            className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
+                        >
+                            Delete Field
+                        </button>
+                        <button
+                            onClick={handleSearchField}
+                            className="bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-blue-500 mb-4"
+                        >
+                            Search Field
+                        </button>
+                    </div>
                 </div>
 
                 <br/>
@@ -61,10 +72,10 @@ export function Field() {
                     {field.map((fieldDetails: any, index: number) => (
                         <li key={index}>
                             {fieldDetails.fieldCode}, {fieldDetails.fieldName},{fieldDetails.fieldLocation},{fieldDetails.ExtentSize},{fieldDetails.cropId},{fieldDetails.staffId},{fieldDetails.FieldImage1},{fieldDetails.FieldImage2}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
-    )
-}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </>
+            )
+            }

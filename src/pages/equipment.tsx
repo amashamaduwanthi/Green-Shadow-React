@@ -17,6 +17,9 @@ export function Equipment(){
         dispatch(deleteEquipment(deleteEquipmentName));
         alert("Equipment Deleted");
     }
+    function handleSearchEquipment(){
+
+    }
 
 
     return (
@@ -45,12 +48,20 @@ export function Equipment(){
                         onChange={(e) => setDeleteEquipmentName(e.target.value)}
                         className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
                     />
-                    <button
-                        onClick={handleDeleteEquipment}
-                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
-                    >
-                        Delete Equipment
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleDeleteEquipment}
+                            className="bg-red-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-red-500 mb-4"
+                        >
+                            Delete Equipment
+                        </button>
+                        <button
+                            onClick={handleSearchEquipment}
+                            className="bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-blue-500 mb-4"
+                        >
+                            Search Equipment
+                        </button>
+                    </div>
                 </div>
 
                 <br/>

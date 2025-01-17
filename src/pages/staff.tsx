@@ -19,7 +19,9 @@ export function Staff() {
         alert("Deleted Successfully");
 
     }
-
+ function handleSearcStaff(event:React.FormEvent) {
+        event.preventDefault();
+ }
 
     return (
         <>
@@ -48,12 +50,21 @@ export function Staff() {
                         className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
                     />
                     <br/>
-                    <button
-                        onClick={handleDeleteStaffMember}
-                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
-                    >
-                        Delete Staff
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleDeleteStaffMember}
+                            className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
+                        >
+                            Delete Staff
+                        </button>
+
+                        <button
+                            onClick={handleSearcStaff}
+                            className="bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-blue-500 mb-4"
+                        >
+                            Search Staff
+                        </button>
+                    </div>
                 </div>
 
                 <br/>
@@ -61,10 +72,10 @@ export function Staff() {
                     {staff.map((staffDetails: any, index: number) => (
                         <li key={index}>
                             {staffDetails.staffId}, {staffDetails.FirstName},{staffDetails.LastName},{staffDetails.Designation},{staffDetails.Gender},{staffDetails.JoinedDate},{staffDetails.DOB},{staffDetails.Address},{staffDetails.Contact},{staffDetails.Email},{staffDetails.Role},{staffDetails.VehicleCode}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
-    )
-}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </>
+            )
+            }

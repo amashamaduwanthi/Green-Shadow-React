@@ -17,6 +17,9 @@ export function Vehicle() {
         dispatch(deleteVehicle(deleteVehicleId));
         alert("Vehicle deleted successfully.");
     }
+    function handleSearchVehicle(event:React.FormEvent){
+        event.preventDefault();
+    }
 
     return (
         <>
@@ -45,12 +48,20 @@ export function Vehicle() {
                         className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
                     />
                     <br/>
-                    <button
-                        onClick={handleDeleteVehicle}
-                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
-                    >
-                        Delete Vehicle
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleDeleteVehicle}
+                            className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
+                        >
+                            Delete Vehicle
+                        </button>
+                        <button
+                            onClick={handleSearchVehicle}
+                            className="bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-blue-500 mb-4"
+                        >
+                            Search Vehicle
+                        </button>
+                    </div>
                 </div>
 
                 <br/>
@@ -58,11 +69,11 @@ export function Vehicle() {
                     {vehicle.map((vehicleDetails: any, index: number) => (
                         <li key={index}>
                             {vehicleDetails.VehicleCode}, {vehicleDetails.LicensePlateNumber},{vehicleDetails.category},{vehicleDetails.FuelType},{vehicleDetails.Status},{vehicleDetails.staffId},{vehicleDetails.Remarks}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </>
 
-    )
-}
+            )
+            }

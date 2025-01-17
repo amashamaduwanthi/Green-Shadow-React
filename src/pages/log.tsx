@@ -18,6 +18,9 @@ export function Log(){
         dispatch(deleteLog(deleteLogCode));
         alert("Deleted Successfully.");
     }
+    function handleSearchLog(event:React.FormEvent){
+        event.preventDefault();
+    }
 
     return (
         <>
@@ -46,12 +49,20 @@ export function Log(){
                         className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
                     />
                     <br/>
-                    <button
-                        onClick={handleDeleteLog}
-                        className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
-                    >
-                        Delete Log
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleDeleteLog}
+                            className="bg-red-600 text-white px-6 py-2 rounded-lg  transition duration-300 mb-4"
+                        >
+                            Delete Log
+                        </button>
+                        <button
+                            onClick={handleSearchLog}
+                            className="bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-blue-500 mb-4"
+                        >
+                            Search Log
+                        </button>
+                    </div>
                 </div>
 
                 <br/>
@@ -59,10 +70,10 @@ export function Log(){
                     {log.map((logDetails: any, index: number) => (
                         <li key={index}>
                             {logDetails.LogCode}, {logDetails.Date},{logDetails.LogDetails},{logDetails.ObservedImage},{logDetails.fieldCode},{logDetails.cropId},{logDetails.staffId}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
-    )
-}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </>
+            )
+            }
