@@ -16,10 +16,10 @@ const VehicleSlice = createSlice({
             const vehicle=state.find((vehicle) => vehicle.LicensePlateNumber === LicensePlateNumber);
             if(vehicle){
                 vehicle.vehicleCode=newVehicleNo || vehicle.vehicleCode;
-                vehicle.category=newCategory || vehicle.categor;
+                vehicle.category=newCategory || vehicle.category;
                 vehicle.status=newStatus || vehicle.Status;
                 vehicle.FuelType=newFuelType || vehicle.FuelType;
-                vehicle.staffId=newStaffId || newStaffId;
+                vehicle.staffId=newStaffId || vehicle.staffId;
                 vehicle.Remarks=newRemark || vehicle.Remarks;
 
             }

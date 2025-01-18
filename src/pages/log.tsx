@@ -8,6 +8,15 @@ export function Log(){
     const log = useSelector((state: any) => state.Log);
     const dispatch = useDispatch();
     const [deleteLogCode,setDeleteLogCode] = useState('');
+    const [searchLogCode,setSearchLogCode] = useState('');
+    const [foundLog,setFoundLog] = useState<any | null>(null);
+
+    const[NewDate, setNewDate] = useState('');
+    const[NewLogDetails, setNewLogDetails] = useState('');
+    const[NewObservedImage, setNewObservedImage] = useState('');
+    const [NewfieldCode, setNewFieldCode] = useState('');
+    const [NewcropId, setNewCropId] = useState('');
+    const [NewstaffId, setNewStaffId] = useState('');
 
     function handleDeleteLog(event:React.FormEvent){
         event.preventDefault();
@@ -20,7 +29,22 @@ export function Log(){
     }
     function handleSearchLog(event:React.FormEvent){
         event.preventDefault();
+        const found = log.find((s: any) => s.LogCode === searchLogCode);
+        if (found) {
+           setFoundLog(found);
+            setNewDate(found.Date);
+            setNewLogDetails(found.LogDetails);
+            setNewObservedImage(found.ObservedImage);
+            setNewFieldCode(found.fieldCode);
+            setNewCropId(found.cropId);
+            setNewStaffId(found.staffId);
+
+        } else {
+            alert('log not found.');
+            setFoundLog(null);
+        }
     }
+    function handleUpdateLog(){}
 
     return (
         <>
@@ -56,12 +80,84 @@ export function Log(){
                         >
                             Delete Log
                         </button>
-                        <button
-                            onClick={handleSearchLog}
-                            className="bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-blue-500 mb-4"
-                        >
-                            Search Log
+                        <input type="text" placeholder="Log Code tosearch" value={searchLogCode}
+                               onChange={(e) => setSearchLogCode(e.target.value)}
+                               className="w-60 h-10 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+
+                        <button onClick={handleSearchLog}
+                                className="bg-blue-300 text-gray-800 font-medium py-2 px-4 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">Search
+                           Log
                         </button>
+                    </div>
+                </div>
+                <div className="max-w-8xl mx-auto px-4 py-8">
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8">
+
+                        {foundLog && (
+
+                            <div className="lg:w-1/3 bg-gray-100 p-8 rounded-lg shadow-lg text-left">
+                                <h3 className="text-3xl font-bold text-gray-900 mb-6">Update Log:</h3>
+
+
+                                <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
+                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Current Log
+                                        Details</h4>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <p>
+                                            <strong className="text-gray-600">Current Date:</strong>
+                                            <span className="text-gray-900">{foundLog.Date}</span>
+                                        </p>
+
+                                        <p>
+                                            <strong className="text-gray-600">Current Log Details:</strong>
+                                            <span className="text-gray-900">{foundLog.LogDetails}</span>
+                                        </p>
+
+                                        <p>
+                                            <strong className="text-gray-600">Current Observed Image:</strong>
+                                            <span className="text-gray-900">{foundLog.ObservedImage}</span>
+                                        </p>
+
+                                        <p>
+                                            <strong className="text-gray-600">Current Field Code:</strong>
+                                            <span className="text-gray-900">{foundLog.fieldCode}</span>
+                                        </p>
+                                        <p>
+                                            <strong className="text-gray-600">Current Crop Id:</strong>
+                                            <span className="text-gray-900">{foundLog.cropId}</span>
+                                        </p>
+
+                                        <p>
+                                            <strong className="text-gray-600">Current staff id</strong>
+                                            <span className="text-gray-900">{foundLog.staffId}</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white p-6 rounded-lg shadow-sm">
+                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Log Details</h4>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <input type="text" placeholder="New log Date" value={NewDate}
+                                               onChange={(e) => setNewDate(e.target.value)}/>
+                                        <input type="text" placeholder="New Log Details" value={NewLogDetails}
+                                               onChange={(e) => setNewLogDetails(e.target.value)}/>
+                                        <input type="text" placeholder="New observed Image" value={NewObservedImage}
+                                               onChange={(e) => setNewObservedImage(e.target.value)}/>
+                                        <input type="text" placeholder="New Filed code" value={NewfieldCode}
+                                               onChange={(e) => setNewFieldCode(e.target.value)}/>
+                                        <input type="text" placeholder="New crop Id" value={NewcropId}
+                                               onChange={(e) => setNewCropId(e.target.value)}/>
+
+                                        <input type="text" placeholder="New staff id" value={NewstaffId}
+                                               onChange={(e) => setNewStaffId(e.target.value)}/>
+                                        <button onClick={handleUpdateLog}
+                                                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update
+                                            vehicle
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -70,10 +166,10 @@ export function Log(){
                     {log.map((logDetails: any, index: number) => (
                         <li key={index}>
                             {logDetails.LogCode}, {logDetails.Date},{logDetails.LogDetails},{logDetails.ObservedImage},{logDetails.fieldCode},{logDetails.cropId},{logDetails.staffId}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </>
-            )
-            }
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
+    )
+}
