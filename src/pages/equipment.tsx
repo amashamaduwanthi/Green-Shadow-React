@@ -15,8 +15,9 @@ export function Equipment(){
     const [newEquipmentId, setNewEquipmentId] = useState('');
     const [newType, setNewType] = useState('');
     const [newStatus, setNewStatus] = useState('');
-    const [newfieldCode, setNewFieldCode] = useState('');
-    const [newstaffId, setNewStaffId] = useState('');
+    const [newFieldCode, setNewFieldCode] = useState('');
+    const [newStaffId, setNewStaffId] = useState('');
+
 
     function handleDeleteEquipment(event: React.FormEvent){
         event.preventDefault();
@@ -40,7 +41,7 @@ export function Equipment(){
 
 
         } else {
-            alert('Field not found.');
+            alert('Equipment not found.');
             setFoundEquipment(null);
         }
 
@@ -141,9 +142,9 @@ export function Equipment(){
                                                onChange={(e) => setNewType(e.target.value)}/>
                                         <input type="text" placeholder="New observed Image" value={newStatus}
                                                onChange={(e) => setNewStatus(e.target.value)}/>
-                                        <input type="text" placeholder="New Filed code" value={newfieldCode}
+                                        <input type="text" placeholder="New Filed code" value={newFieldCode}
                                                onChange={(e) => setNewFieldCode(e.target.value)}/>
-                                        <input type="text" placeholder="New crop Id" value={newstaffId}
+                                        <input type="text" placeholder="New crop Id" value={newStaffId}
                                                onChange={(e) => setNewStaffId(e.target.value)}/>
 
 
