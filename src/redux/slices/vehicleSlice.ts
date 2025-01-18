@@ -10,9 +10,24 @@ const VehicleSlice = createSlice({
         },
         deleteVehicle: (state, action) => {
             return state.filter( vehicle => vehicle.LicensePlateNumber !== action.payload );
+        },
+        updateVehicle: (state, action) => {
+            const {LicensePlateNumber,newVehicleNo,newCategory,newStatus,newFuelType,newStaffId,newRemark} = action.payload;
+            const vehicle=state.find((vehicle) => vehicle.LicensePlateNumber === LicensePlateNumber);
+            if(vehicle){
+                vehicle.vehicleCode=newVehicleNo || vehicle.vehicleCode;
+                vehicle.category=newCategory || vehicle.categor;
+                vehicle.status=newStatus || vehicle.Status;
+                vehicle.FuelType=newFuelType || vehicle.FuelType;
+                vehicle.staffId=newStaffId || newStaffId;
+                vehicle.Remarks=newRemark || vehicle.Remarks;
+
+            }
+
         }
+
     }
 
 })
 export default VehicleSlice.reducer;
-export const {addNewVehicle,deleteVehicle} = VehicleSlice.actions;
+export const {addNewVehicle,deleteVehicle,updateVehicle} = VehicleSlice.actions;

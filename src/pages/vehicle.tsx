@@ -1,13 +1,27 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {deleteVehicle} from "../redux/slices/vehicleSlice.ts";
+import {deleteVehicle, updateVehicle} from "../redux/slices/vehicleSlice.ts";
 
 
 export function Vehicle() {
     const vehicle = useSelector((state:any) => state.vehicle);
     const dispatch = useDispatch();
     const [deleteVehicleId, setDeleteVehicleId] = useState('');
+
+
+    const [searchLicenseNumber,setSearchLicenseNumber] = useState('');
+    const [foundVehicle,setFoundVehicle] = useState<any | null>(null);
+
+    const [NewVehicleCode,setNewVehicleCode] = useState('');
+    const [Newcategory,setNewCategory] = useState('');
+    const [NewFuelType,setNewFuelType] =useState('');
+    const [NewStatus, setNewStatus] = useState('');
+    const [NewstaffId, setNewStaffId] = useState('');
+    const [NewRemarks,setNewRemarks] = useState('');
+
+
+
 
     function handleDeleteVehicle(event:React.FormEvent){
         event.preventDefault();
@@ -19,6 +33,37 @@ export function Vehicle() {
     }
     function handleSearchVehicle(event:React.FormEvent){
         event.preventDefault();
+        const found = vehicle.find((v: any) => v.LicensePlateNumber === searchLicenseNumber);
+        if (found) {
+            setFoundVehicle(found);
+           setNewVehicleCode(found.vehicleCode);
+           setNewCategory(found.category);
+           setNewFuelType(found.FuelType);
+           setNewStatus(found.Status);
+           setNewStaffId(found.staffId);
+           setNewRemarks(found.Remarks);
+
+        } else {
+            alert('vehicle not found.');
+            setFoundVehicle(null);
+        }
+    }
+    function handleUpdateVehicle(event:React.FormEvent){
+        event.preventDefault();
+        if(foundVehicle){
+            dispatch(updateVehicle({LicensePlateNumber:foundVehicle.LicensePlateNumber,NewVehicleCode,Newcategory,NewStatus,NewFuelType,NewstaffId,NewRemarks}));
+
+            alert("vehicle updated successfully.");
+            setNewVehicleCode('');
+            setNewCategory('');
+            setNewStatus('');
+            setNewFuelType('');
+            setNewStaffId('')
+            setNewRemarks('');
+        }else{
+            alert("vehicle not found.");
+            setFoundVehicle(null);
+        }
     }
 
     return (
@@ -55,25 +100,96 @@ export function Vehicle() {
                         >
                             Delete Vehicle
                         </button>
-                        <button
-                            onClick={handleSearchVehicle}
-                            className="bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-blue-500 mb-4"
-                        >
-                            Search Vehicle
+                        <input type="text" placeholder="License No to search" value={searchLicenseNumber}
+                               onChange={(e) => setSearchLicenseNumber(e.target.value)}
+                               className="w-60 h-10 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+
+                        <button onClick={handleSearchVehicle}
+                                className="bg-blue-300 text-gray-800 font-medium py-2 px-4 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">Search
+                            Vehicle
                         </button>
                     </div>
                 </div>
 
+                <div className="max-w-8xl mx-auto px-4 py-8">
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8">
+
+                        {foundVehicle && (
+
+                            <div className="lg:w-1/3 bg-gray-100 p-8 rounded-lg shadow-lg text-left">
+                                <h3 className="text-3xl font-bold text-gray-900 mb-6">Update Vehicle:</h3>
+
+
+                                <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
+                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Current Vehicle Details</h4>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <p>
+                                            <strong className="text-gray-600">Current Vehicle No:</strong>
+                                            <span className="text-gray-900">{foundVehicle.VehicleCode}</span>
+                                        </p>
+
+                                        <p>
+                                            <strong className="text-gray-600">Current Category:</strong>
+                                            <span className="text-gray-900">{foundVehicle.category}</span>
+                                        </p>
+
+                                        <p>
+                                            <strong className="text-gray-600">Current Status:</strong>
+                                            <span className="text-gray-900">{foundVehicle.Status}</span>
+                                        </p>
+
+                                        <p>
+                                            <strong className="text-gray-600">Current Fuel type:</strong>
+                                            <span className="text-gray-900">{foundVehicle.FuelType}</span>
+                                        </p>
+                                        <p>
+                                            <strong className="text-gray-600">Current Staff Id:</strong>
+                                            <span className="text-gray-900">{foundVehicle.staffId}</span>
+                                        </p>
+
+                                        <p>
+                                            <strong className="text-gray-600">Current Remark:</strong>
+                                            <span className="text-gray-900">{foundVehicle.Remarks}</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white p-6 rounded-lg shadow-sm">
+                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Vehicle Details</h4>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <input type="text" placeholder="New vehicle code" value={NewVehicleCode}
+                                               onChange={(e) => setNewVehicleCode(e.target.value)}/>
+                                        <input type="text" placeholder="New category" value={Newcategory}
+                                               onChange={(e) => setNewCategory(e.target.value)}/>
+                                        <input type="text" placeholder="New status" value={NewStatus}
+                                               onChange={(e) => setNewStatus(e.target.value)}/>
+                                        <input type="text" placeholder="New fuel type" value={NewFuelType}
+                                               onChange={(e) => setNewFuelType(e.target.value)}/>
+                                        <input type="text" placeholder="New Staff Id" value={NewstaffId}
+                                               onChange={(e) => setNewStaffId(e.target.value)}/>
+
+                                        <input type="text" placeholder="New remark" value={NewRemarks}
+                                               onChange={(e) => setNewRemarks(e.target.value)}/>
+                                        <button onClick={handleUpdateVehicle}
+                                                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update
+                                            vehicle
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
                 <br/>
                 <ul>
                     {vehicle.map((vehicleDetails: any, index: number) => (
                         <li key={index}>
                             {vehicleDetails.VehicleCode}, {vehicleDetails.LicensePlateNumber},{vehicleDetails.category},{vehicleDetails.FuelType},{vehicleDetails.Status},{vehicleDetails.staffId},{vehicleDetails.Remarks}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
 
-            )
-            }
+    )
+}

@@ -1,13 +1,14 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {deleteCrop} from "../redux/slices/cropSlice.ts";
+import {deleteCrop, searchCrop} from "../redux/slices/cropSlice.ts";
 
 
 export function Crop(){
     const crop = useSelector((state:any)=>state.crop);
     const dispatch = useDispatch();
     const [deleteCropCode, setDeleteCropCode] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     function handleDeleteCrop(event: React.FormEvent) {
         event.preventDefault();
         if(!deleteCropCode){
@@ -53,6 +54,7 @@ export function Crop(){
                         >
                             Search
                         </button>
+
 
                         <button
                             onClick={handleDeleteCrop}

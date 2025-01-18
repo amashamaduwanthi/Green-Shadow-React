@@ -11,7 +11,8 @@ const CropSlice = createSlice({
     },
     deleteCrop:(state,action)=>{
       return state.filter(crop => crop.cropId !== action.payload);
-    }
+    },
+
   }
 });
 export default CropSlice.reducer;
