@@ -86,7 +86,7 @@ export function Log(){
 
                         <button onClick={handleSearchLog}
                                 className="bg-blue-300 text-gray-800 font-medium py-2 px-4 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">Search
-                           Log
+                            Log
                         </button>
                     </div>
                 </div>
@@ -162,13 +162,62 @@ export function Log(){
                 </div>
 
                 <br/>
-                <ul>
+                <ul className="space-y-6">
                     {log.map((logDetails: any, index: number) => (
-                        <li key={index}>
-                            {logDetails.LogCode}, {logDetails.Date},{logDetails.LogDetails},{logDetails.ObservedImage},{logDetails.fieldCode},{logDetails.cropId},{logDetails.staffId}
+                        <li
+                            key={index}
+                            className={`flex items-center justify-between p-6 rounded-lg shadow-md ${
+                                index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                            } hover:bg-teal-50 transition duration-200`}
+                        >
+                            <div className="flex items-center space-x-8">
+                <span className="text-teal-600">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                        />
+                    </svg>
+                </span>
+                                <div className="text-left">
+                                    <p className="text-lg font-bold text-gray-800">
+                                        {logDetails.LogCode} - {logDetails.LogDetails}
+                                    </p>
+                                    <p className="text-base text-gray-700">
+                                        <span className="font-semibold text-teal-800">Date:</span> {logDetails.Date}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-center space-x-10">
+                                <p className="text-base text-gray-700">
+                                    <span
+                                        className="font-semibold text-teal-800">Field Code:</span> {logDetails.fieldCode}
+                                </p>
+                                <p className="text-base text-gray-700">
+                                    <span className="font-semibold text-teal-800">Crop ID:</span> {logDetails.cropId}
+                                </p>
+                                <p className="text-base text-gray-700">
+                                    <span className="font-semibold text-teal-800">Staff ID:</span> {logDetails.staffId}
+                                </p>
+                                <div className="flex space-x-4">
+                                    <p className="text-base text-gray-700">
+                                        <span
+                                            className="font-semibold text-teal-800">Observed Image:</span> {logDetails.ObservedImage}
+                                    </p>
+                                </div>
+                            </div>
                         </li>
                     ))}
                 </ul>
+
             </div>
         </>
     )

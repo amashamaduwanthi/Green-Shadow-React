@@ -178,13 +178,68 @@ export function Field() {
 
 
                 <br/>
-                <ul>
+                <ul className="space-y-6">
                     {field.map((fieldDetails: any, index: number) => (
-                        <li key={index}>
-                            {fieldDetails.fieldCode}, {fieldDetails.fieldName},{fieldDetails.fieldLocation},{fieldDetails.ExtentSize},{fieldDetails.cropId},{fieldDetails.staffId},{fieldDetails.FieldImage1},{fieldDetails.FieldImage2}
+                        <li
+                            key={index}
+                            className={`flex items-center justify-between p-6 rounded-lg shadow-md ${
+                                index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                            } hover:bg-teal-50 transition duration-200`}
+                        >
+                            <div className="flex items-center space-x-8">
+                <span className="text-teal-600">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                        />
+                    </svg>
+                </span>
+                                <div className="text-left">
+                                    <p className="text-lg font-bold text-gray-800">
+                                        {fieldDetails.fieldCode} - {fieldDetails.fieldName}
+                                    </p>
+                                    <p className="text-base text-gray-700">
+                                        <span
+                                            className="font-semibold text-teal-800">Location:</span> {fieldDetails.fieldLocation}
+                                    </p>
+                                    <p className="text-base text-gray-700">
+                                        <span
+                                            className="font-semibold text-teal-800">Extent Size:</span> {fieldDetails.ExtentSize}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-center space-x-10">
+                                <p className="text-base text-gray-700">
+                                    <span className="font-semibold text-teal-800">Crop ID:</span> {fieldDetails.cropId}
+                                </p>
+                                <p className="text-base text-gray-700">
+                                    <span
+                                        className="font-semibold text-teal-800">Staff ID:</span> {fieldDetails.staffId}
+                                </p>
+                                <div className="flex space-x-4">
+                                    <p className="text-base text-gray-700">
+                                        <span
+                                            className="font-semibold text-teal-800">Image 1:</span> {fieldDetails.FieldImage1}
+                                    </p>
+                                    <p className="text-base text-gray-700">
+                                        <span
+                                            className="font-semibold text-teal-800">Image 2:</span> {fieldDetails.FieldImage2}
+                                    </p>
+                                </div>
+                            </div>
                         </li>
                     ))}
                 </ul>
+
             </div>
         </>
     )

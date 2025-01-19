@@ -127,7 +127,7 @@ export function AddNewMonitoringLog(){
                     <h2 className="text-2xl font-semibold text-teal-900 mb-6">Monitoring Log Details</h2>
                     <table className="min-w-full table-auto border-collapse border border-gray-300">
                         <thead>
-                        <tr className="bg-gray-100 border-b">
+                        <tr  className="bg-teal-600 text-white">
                             <th className="px-4 py-2 text-left text-gray-700">Log Code</th>
                             <th className="px-4 py-2 text-left text-gray-700">Date</th>
                             <th className="px-4 py-2 text-left text-gray-700">Log Details</th>

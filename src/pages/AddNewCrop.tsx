@@ -131,32 +131,39 @@ export function AddNewCrop() {
                 {/* Table Section - Right Side */}
                 <div className="bg-white shadow-xl rounded-lg p-6 max-w-7xl w-full">
                     <h2 className="text-2xl font-semibold text-teal-900 mb-6">Crop Details</h2>
-                    <table className="min-w-full table-auto border-collapse border border-gray-300">
+                    <table
+                        className="min-w-full table-auto border border-gray-300 rounded-lg overflow-hidden shadow-lg">
                         <thead>
-                        <tr className="bg-gray-100 border-b">
-                            <th className="px-4 py-2 text-left text-gray-700">Crop ID</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Crop Name</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Scientific Name</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Image URL</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Category</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Season</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Field Code</th>
+                        <tr className="bg-teal-600 text-white">
+                            <th className="px-4 py-3 text-left">Crop ID</th>
+                            <th className="px-4 py-3 text-left">Crop Name</th>
+                            <th className="px-4 py-3 text-left">Scientific Name</th>
+                            <th className="px-4 py-3 text-left">Image URL</th>
+                            <th className="px-4 py-3 text-left">Category</th>
+                            <th className="px-4 py-3 text-left">Season</th>
+                            <th className="px-4 py-3 text-left">Field Code</th>
                         </tr>
                         </thead>
                         <tbody>
                         {crop.map((cropDetails: any, index: number) => (
-                            <tr key={index} className="border-b">
-                                <td className="px-4 py-2">{cropDetails.cropId}</td>
-                                <td className="px-4 py-2">{cropDetails.cropName}</td>
-                                <td className="px-4 py-2">{cropDetails.scientificName}</td>
-                                <td className="px-4 py-2">{cropDetails.image}</td>
-                                <td className="px-4 py-2">{cropDetails.category}</td>
-                                <td className="px-4 py-2">{cropDetails.season}</td>
-                                <td className="px-4 py-2">{cropDetails.fieldCode}</td>
+                            <tr
+                                key={index}
+                                className={`${
+                                    index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                                } hover:bg-teal-100 border-b transition duration-200`}
+                            >
+                                <td className="px-4 py-3 text-gray-700">{cropDetails.cropId}</td>
+                                <td className="px-4 py-3 text-gray-700">{cropDetails.cropName}</td>
+                                <td className="px-4 py-3 text-gray-700">{cropDetails.scientificName}</td>
+                                <td className="px-4 py-3 text-gray-700">{cropDetails.image}</td>
+                                <td className="px-4 py-3 text-gray-700">{cropDetails.category}</td>
+                                <td className="px-4 py-3 text-gray-700">{cropDetails.season}</td>
+                                <td className="px-4 py-3 text-gray-700">{cropDetails.fieldCode}</td>
                             </tr>
                         ))}
                         </tbody>
                     </table>
+
                 </div>
             </div>
 

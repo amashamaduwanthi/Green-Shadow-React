@@ -17,7 +17,7 @@ const VehicleSlice = createSlice({
             if(vehicle){
                 vehicle.vehicleCode=newVehicleNo || vehicle.vehicleCode;
                 vehicle.category=newCategory || vehicle.category;
-                vehicle.status=newStatus || vehicle.Status;
+                vehicle.Status=newStatus || vehicle.Status;
                 vehicle.FuelType=newFuelType || vehicle.FuelType;
                 vehicle.staffId=newStaffId || vehicle.staffId;
                 vehicle.Remarks=newRemark || vehicle.Remarks;

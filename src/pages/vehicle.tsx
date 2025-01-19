@@ -77,7 +77,7 @@ export function Vehicle() {
 
 
                 <Link to="/vehicle/Add">
-                <button
+                    <button
                         className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition duration-300 mb-4">
                         Add Vehicle
                     </button>
@@ -121,7 +121,8 @@ export function Vehicle() {
 
 
                                 <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Current Vehicle Details</h4>
+                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Current Vehicle
+                                        Details</h4>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <p>
                                             <strong className="text-gray-600">Current Vehicle No:</strong>
@@ -181,13 +182,63 @@ export function Vehicle() {
                     </div>
                 </div>
                 <br/>
-                <ul>
+                <ul className="space-y-6">
                     {vehicle.map((vehicleDetails: any, index: number) => (
-                        <li key={index}>
-                            {vehicleDetails.VehicleCode}, {vehicleDetails.LicensePlateNumber},{vehicleDetails.category},{vehicleDetails.FuelType},{vehicleDetails.Status},{vehicleDetails.staffId},{vehicleDetails.Remarks}
+                        <li
+                            key={index}
+                            className={`flex items-center justify-between p-6 rounded-lg shadow-md ${
+                                index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                            } hover:bg-teal-50 transition duration-200`}
+                        >
+                            <div className="flex items-center space-x-8">
+                <span className="text-teal-600">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                        />
+                    </svg>
+                </span>
+                                <div className="text-left">
+                                    <p className="text-lg font-bold text-gray-800">
+                                        {vehicleDetails.VehicleCode} - {vehicleDetails.LicensePlateNumber}
+                                    </p>
+                                    <p className="text-base text-gray-700">
+                                        <span
+                                            className="font-semibold text-teal-800">Category:</span> {vehicleDetails.category}
+                                    </p>
+                                    <p className="text-base text-gray-700">
+                                        <span
+                                            className="font-semibold text-teal-800">Fuel Type:</span> {vehicleDetails.FuelType}
+                                    </p>
+                                    <p className="text-base text-gray-700">
+                                        <span
+                                            className="font-semibold text-teal-800">Status:</span> {vehicleDetails.Status}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-center space-x-10">
+                                <p className="text-base text-gray-700">
+                                    <span
+                                        className="font-semibold text-teal-800">Staff ID:</span> {vehicleDetails.staffId}
+                                </p>
+                                <p className="text-base text-gray-700">
+                                    <span
+                                        className="font-semibold text-teal-800">Remarks:</span> {vehicleDetails.Remarks}
+                                </p>
+                            </div>
                         </li>
                     ))}
                 </ul>
+
             </div>
         </>
 
