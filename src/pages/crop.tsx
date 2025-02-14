@@ -1,7 +1,7 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {deleteCrop} from "../redux/slices/cropSlice.ts";
+import {useEffect, useState} from "react";
+import {deleteCrops, getCrops} from "../redux/slices/cropReducer.ts";
 
 
 export function Crop(){
@@ -18,6 +18,9 @@ export function Crop(){
     const [newCategory, setNewCategory] = useState('');
     const [newSeason, setNewSeason] = useState('');
     const [newFieldCode, setNewFieldCode] = useState('');
+    useEffect(() => {
+        dispatch(getCrops());
+    }, [dispatch]);
 
     function handleDeleteCrop(event: React.FormEvent) {
         event.preventDefault();
@@ -25,7 +28,7 @@ export function Crop(){
             alert("Crop Code is empty");
 
         }
-        dispatch(deleteCrop(deleteCropCode));
+        dispatch(deleteCrops(deleteCropCode));
         setDeleteCropCode('');
     }
     function handleSearchCrop(event: React.FormEvent) {

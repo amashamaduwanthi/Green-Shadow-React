@@ -1,8 +1,8 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-import {deleteField} from "../redux/slices/fieldSlice.ts";
+import {deleteField, getFields} from "../redux/slices/fieldReducer.ts";
 
 
 export function Field() {
@@ -20,6 +20,9 @@ export function Field() {
 
     const [searchFieldName,setSearchFieldName] = useState('');
     const [foundField,setFoundField] = useState<any | null>(null);
+    useEffect(() => {
+        dispatch(getFields());
+    }, [dispatch]);
 
     function handleDeleteField(event:React.FormEvent) {
         event.preventDefault();
@@ -32,7 +35,7 @@ export function Field() {
     }
     function handleSearchField(event:React.FormEvent) {
         event.preventDefault();
-        const found = field.find((s: any) => s.fieldName === searchFieldName);
+        const found = field.find((s: any) => s.fieldCode === searchFieldName);
         if (found) {
             setFoundField(found);
             setNewFieldCode(found.fieldCode);

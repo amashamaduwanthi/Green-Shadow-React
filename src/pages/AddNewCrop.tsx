@@ -1,172 +1,126 @@
+import { Trash2 } from "react-feather";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {addNewCrop} from "../redux/slices/cropSlice.ts";
+import {deleteCrops, getCrops, saveCrop} from "../redux/slices/cropReducer.ts";
+import { AppDispatch } from "../redux/store.ts";
+import { Crop } from "../model/Crop.ts";
 
-export function AddNewCrop() {
-    const crop=useSelector((state:any)=>state.crop);
-    const dispatch = useDispatch();
+function AddNewCrop() {
+    const crops = useSelector((state: any) => state.crop);
+    const dispatch = useDispatch<AppDispatch>();
 
-    const [cropId, setCropId] = useState('');
-    const [cropName, setCropName] = useState('');
-    const [scientificName, setScientificName] = useState('');
-    const [image, setImage] = useState('');
-    const [category, setCategory] = useState('');
-    const [season, setSeason] = useState('');
-    const [fieldCode, setFieldCode] = useState('');
+    const [cropId, setCropId] = useState("");
+    const [cropName, setCropName] = useState("");
+    const [cropImage, setCropImage] = useState("");
+    const [category, setCategory] = useState("");
+    const [season, setSeason] = useState("");
+    const [fieldCode, setFieldCode] = useState("");
 
+    const [isEditing, setIsEditing] = useState(false);
+    useEffect(() => {
+        dispatch(getCrops());
+    }, [dispatch]);
 
+    const handleAdd = () => {
+        if (!cropId || !cropName || !cropImage || !category || !season || !fieldCode) {
+            alert("All fields are required!");
+            return;
+        }
+        const newCrop = new Crop(cropId, cropName, cropImage, category, season, fieldCode);
+        dispatch(saveCrop(newCrop));
+        resetForm();
+    };
 
+    const handleEdit = (crop: any) => {
+        setCropId(crop.cropId);
+        setCropName(crop.cropName);
+        setCropImage(crop.cropImage);
+        setCategory(crop.category);
+        setSeason(crop.season);
+        setFieldCode(crop.fieldCode);
+        setIsEditing(true);
+    };
 
-    function handleSubmitCrop(event: React.FormEvent) {
+    const handleUpdate = () => {
+        if (!cropId || !cropName || !cropImage || !category || !season || !fieldCode) {
+            alert("All fields are required!");
+            return;
+        }
+        // Update logic can be implemented later.
+        resetForm();
+    };
 
-        event.preventDefault();
+    const handleDelete = (cropId: string) => {
+        if (window.confirm("Are you sure you want to delete this crop?")) {
+            dispatch(deleteCrops(cropId));
+            dispatch(getCrops())
+        }
+    };
 
-        dispatch(addNewCrop({cropId,cropName,scientificName,image,category,season,fieldCode}));
-        setCropId('');
-        setCropName('');
-        setScientificName('');
-        setImage('');
-        setCategory('');
-        setSeason('');
-        setFieldCode('');
-    }
+    const resetForm = () => {
+        setCropId("");
+        setCropName("");
+        setCropImage("");
+        setCategory("");
+        setSeason("");
+        setFieldCode("");
+        setIsEditing(false);
+    };
+
     return (
-        <>
-            <br/>
-            <div className="flex flex-row justify-between items-start gap-2 pl-40">
-                {/* Form Section - Left Side */}
-                <div className="bg-white shadow-xl rounded-lg p-6 max-w-lg w-full">
-                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Add New Crop</h2>
-                    <form className="space-y-4 text-left">
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Crop ID:</label>
-                            <input
-                                type="text"
-                                name="crop_id"
-                                value={cropId}
-                                onChange={(e) => setCropId(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Crop Name:</label>
-                            <input
-                                type="text"
-                                name="crop_name"
-                                value={cropName}
-                                onChange={(e) => setCropName(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Scientific Name:</label>
-                            <input
-                                type="text"
-                                name="scientific_name"
-                                value={scientificName}
-                                onChange={(e) => setScientificName(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Image URL:</label>
-                            <input
-                                type="text"
-                                name="image"
-                                value={image}
-                                onChange={(e) => setImage(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Category:</label>
-                            <input
-                                type="text"
-                                name="category"
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Season:</label>
-                            <input
-                                type="text"
-                                name="season"
-                                value={season}
-                                onChange={(e) => setSeason(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Field Code:</label>
-                            <input
-                                type="text"
-                                name="field_code"
-                                value={fieldCode}
-                                onChange={(e) => setFieldCode(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="mt-4">
-                            <button
-                                type="submit"
-                                onClick={handleSubmitCrop}
-                                className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-500 transition duration-300"
-                            >
-                                Add Crop
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                {/* Table Section - Right Side */}
-                <div className="bg-white shadow-xl rounded-lg p-6 max-w-7xl w-full">
-                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Crop Details</h2>
-                    <table
-                        className="min-w-full table-auto border border-gray-300 rounded-lg overflow-hidden shadow-lg">
-                        <thead>
-                        <tr className="bg-teal-600 text-white">
-                            <th className="px-4 py-3 text-left">Crop ID</th>
-                            <th className="px-4 py-3 text-left">Crop Name</th>
-                            <th className="px-4 py-3 text-left">Scientific Name</th>
-                            <th className="px-4 py-3 text-left">Image URL</th>
-                            <th className="px-4 py-3 text-left">Category</th>
-                            <th className="px-4 py-3 text-left">Season</th>
-                            <th className="px-4 py-3 text-left">Field Code</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {crop.map((cropDetails: any, index: number) => (
-                            <tr
-                                key={index}
-                                className={`${
-                                    index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-                                } hover:bg-teal-100 border-b transition duration-200`}
-                            >
-                                <td className="px-4 py-3 text-gray-700">{cropDetails.cropId}</td>
-                                <td className="px-4 py-3 text-gray-700">{cropDetails.cropName}</td>
-                                <td className="px-4 py-3 text-gray-700">{cropDetails.scientificName}</td>
-                                <td className="px-4 py-3 text-gray-700">{cropDetails.image}</td>
-                                <td className="px-4 py-3 text-gray-700">{cropDetails.category}</td>
-                                <td className="px-4 py-3 text-gray-700">{cropDetails.season}</td>
-                                <td className="px-4 py-3 text-gray-700">{cropDetails.fieldCode}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-
-                </div>
+        <div className="p-6">
+            <div className="grid grid-cols-2 gap-4 mb-4">
+                <input type="text" placeholder="Crop ID" value={cropId} onChange={(e) => setCropId(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Crop Name" value={cropName} onChange={(e) => setCropName(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Image URL" value={cropImage} onChange={(e) => setCropImage(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Season" value={season} onChange={(e) => setSeason(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Field Code" value={fieldCode} onChange={(e) => setFieldCode(e.target.value)} className="border p-2 rounded" />
+            </div>
+            <div className="flex justify-end">
+                {isEditing ? (
+                    <button onClick={handleUpdate} className="bg-blue-500 text-white p-2 rounded mr-2">Update</button>
+                ) : (
+                    <button onClick={handleAdd} className="bg-green-500 text-white p-2 rounded mr-2">Add</button>
+                )}
+                {isEditing && (
+                    <button onClick={resetForm} className="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                )}
             </div>
 
-        </>
-    )
+            <table className="min-w-full table-auto border-collapse mt-6">
+                <thead>
+                <tr   className="bg-teal-600 text-white">
+                    <th className="border px-4 py-2">Crop ID</th>
+                    <th className="border px-4 py-2">Crop Name</th>
+                    <th className="border px-4 py-2">Image</th>
+                    <th className="border px-4 py-2">Category</th>
+                    <th className="border px-4 py-2">Season</th>
+                    <th className="border px-4 py-2">Field Code</th>
+                    <th className="border px-4 py-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {crops.map((crop: any, index: number) => (
+                    <tr key={index} onClick={() => handleEdit(crop)} className="hover:cursor-pointer hover:bg-slate-600 hover:text-white">
+                        <td className="border px-4 py-2">{crop.cropId}</td>
+                        <td className="border px-4 py-2">{crop.cropName}</td>
+                        <td className="border px-4 py-2">{crop.cropImage}</td>
+                        <td className="border px-4 py-2">{crop.category}</td>
+                        <td className="border px-4 py-2">{crop.season}</td>
+                        <td className="border px-4 py-2">{crop.fieldCode}</td>
+                        <td className="border px-4 py-2 text-center">
+                            <button onClick={() => handleDelete(crop.cropId)} className="bg-red-500 text-white p-2 rounded-lg">
+                                <Trash2 />
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
+
+export default AddNewCrop;
