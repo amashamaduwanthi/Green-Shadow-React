@@ -1,11 +1,11 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import equipmentSlice from "./slices/equipmentSlice.ts";
-import logSlice from "./slices/logSlice.ts";
-import vehicleSlice from "./slices/vehicleSlice.ts";
-import staffSlice from "./slices/staffSlice.ts";
 import fieldReducer from "./slices/fieldReducer.ts";
 import cropReducer from "./slices/cropReducer.ts";
+import staffReducer from "./slices/staffReducer.ts";
+import logReducer from "./slices/logReducer.ts";
+import vehicleReducer from "./slices/vehicleReducer.ts";
 
 
 export const store = configureStore({
@@ -13,9 +13,9 @@ export const store = configureStore({
        crop:cropReducer,
       equipment:equipmentSlice,
       field:fieldReducer,
-      Log:logSlice,
-      vehicle:vehicleSlice,
-      staff:staffSlice,
+      log:logReducer,
+      vehicle:vehicleReducer,
+      staff:staffReducer,
   },
 });
 

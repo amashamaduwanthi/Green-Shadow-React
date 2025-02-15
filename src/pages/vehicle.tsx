@@ -1,12 +1,13 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {deleteVehicle, updateVehicle} from "../redux/slices/vehicleSlice.ts";
+import {useEffect, useState} from "react";
+import {deleteVehicle, deleteVehicles, getVehicles, updateVehicles} from "../redux/slices/vehicleReducer.ts";
+import {AppDispatch} from "../redux/store.ts";
 
 
 export function Vehicle() {
     const vehicle = useSelector((state:any) => state.vehicle);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const [deleteVehicleId, setDeleteVehicleId] = useState('');
 
 
@@ -20,7 +21,9 @@ export function Vehicle() {
     const [NewstaffId, setNewStaffId] = useState('');
     const [NewRemarks,setNewRemarks] = useState('');
 
-
+    useEffect(() => {
+        dispatch(getVehicles());
+    }, [dispatch]);
 
 
     function handleDeleteVehicle(event:React.FormEvent){
@@ -28,22 +31,23 @@ export function Vehicle() {
         if(!deleteVehicleId){
             alert("Vehicle not found.");
         }
-        dispatch(deleteVehicle(deleteVehicleId));
+        dispatch(deleteVehicles(deleteVehicleId));
         alert("Vehicle deleted successfully.");
     }
     function handleSearchVehicle(event:React.FormEvent){
         event.preventDefault();
-        const found = vehicle.find((v: any) => v.LicensePlateNumber === searchLicenseNumber);
+        const found = vehicle.find((v: any) => v.licensePlateNo === searchLicenseNumber);
         if (found) {
             setFoundVehicle(found);
            setNewVehicleCode(found.vehicleCode);
            setNewCategory(found.category);
-           setNewFuelType(found.FuelType);
-           setNewStatus(found.Status);
+           setNewFuelType(found.fuelType);
+           setNewStatus(found.status);
            setNewStaffId(found.staffId);
-           setNewRemarks(found.Remarks);
+           setNewRemarks(found.remarks);
 
         } else {
+
             alert('vehicle not found.');
             setFoundVehicle(null);
         }
@@ -51,7 +55,7 @@ export function Vehicle() {
     function handleUpdateVehicle(event:React.FormEvent){
         event.preventDefault();
         if(foundVehicle){
-            dispatch(updateVehicle({LicensePlateNumber:foundVehicle.LicensePlateNumber,NewVehicleCode,Newcategory,NewStatus,NewFuelType,NewstaffId,NewRemarks}));
+            dispatch(updateVehicles({licensePlateNumber:foundVehicle.licensePlateNumber,NewVehicleCode,Newcategory,NewStatus,NewFuelType,NewstaffId,NewRemarks}));
 
             alert("vehicle updated successfully.");
             setNewVehicleCode('');
@@ -217,11 +221,11 @@ export function Vehicle() {
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Fuel Type:</span> {vehicleDetails.FuelType}
+                                            className="font-semibold text-teal-800">Fuel Type:</span> {vehicleDetails.fuelType}
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Status:</span> {vehicleDetails.Status}
+                                            className="font-semibold text-teal-800">Status:</span> {vehicleDetails.status}
                                     </p>
                                 </div>
                             </div>
@@ -232,7 +236,7 @@ export function Vehicle() {
                                 </p>
                                 <p className="text-base text-gray-700">
                                     <span
-                                        className="font-semibold text-teal-800">Remarks:</span> {vehicleDetails.Remarks}
+                                        className="font-semibold text-teal-800">Remarks:</span> {vehicleDetails.remarks}
                                 </p>
                             </div>
                         </li>

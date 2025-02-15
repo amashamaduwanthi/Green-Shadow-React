@@ -9,16 +9,15 @@ import {Log} from "./pages/log.tsx";
 import {Crop} from "./pages/crop.tsx";
 import {store} from "./redux/store.ts";
 import {Provider} from "react-redux";
-import {AddStaffMember} from "./pages/AddStaffMember.tsx";
-
-
 import {AddNewEquipment} from "./pages/AddNewEquipment.tsx";
-import {AddNewVehicle} from "./pages/AddNewVehicle.tsx";
-import {AddNewMonitoringLog} from "./pages/AddNewMonitoringLog.tsx";
-import './App.css'
-import AddNewField from "./pages/AddNewField.tsx";
 
+import AddNewField from "./pages/AddNewField.tsx";
 import AddNewCrop from "./pages/AddNewCrop.tsx";
+import AddStaffMember from "./pages/AddStaffMember.tsx";
+import AddNewMonitoringLog from "./pages/AddNewMonitoringLog.tsx";
+import './App.css'
+
+import AddNewVehicle from "./pages/AddNewVehicle.tsx";
 
 
 function App() {

@@ -1,12 +1,14 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {deleteLog} from "../redux/slices/logSlice.ts";
+import {useEffect, useState} from "react";
+import {deleteLogs,  getLogs} from "../redux/slices/logReducer.ts";
+import {AppDispatch} from "../redux/store.ts";
 
 
 export function Log(){
-    const log = useSelector((state: any) => state.Log);
-    const dispatch = useDispatch();
+    const log = useSelector((state: any) => state.log);
+
+    const dispatch = useDispatch<AppDispatch>();
     const [deleteLogCode,setDeleteLogCode] = useState('');
     const [searchLogCode,setSearchLogCode] = useState('');
     const [foundLog,setFoundLog] = useState<any | null>(null);
@@ -18,13 +20,17 @@ export function Log(){
     const [NewcropId, setNewCropId] = useState('');
     const [NewstaffId, setNewStaffId] = useState('');
 
+    useEffect(() => {
+        dispatch(getLogs());
+    }, [dispatch]);
+
     function handleDeleteLog(event:React.FormEvent){
         event.preventDefault();
         if(!deleteLogCode){
             alert("Log Not Found");
 
         }
-        dispatch(deleteLog(deleteLogCode));
+        dispatch(deleteLogs(deleteLogCode));
         alert("Deleted Successfully.");
     }
     function handleSearchLog(event:React.FormEvent){
@@ -32,12 +38,10 @@ export function Log(){
         const found = log.find((s: any) => s.LogCode === searchLogCode);
         if (found) {
            setFoundLog(found);
-            setNewDate(found.Date);
-            setNewLogDetails(found.LogDetails);
-            setNewObservedImage(found.ObservedImage);
-            setNewFieldCode(found.fieldCode);
-            setNewCropId(found.cropId);
-            setNewStaffId(found.staffId);
+            setNewDate(found.date);
+            setNewLogDetails(found.observation);
+            setNewObservedImage(found.LogImage);
+
 
         } else {
             alert('log not found.');
@@ -192,25 +196,25 @@ export function Log(){
                                         {logDetails.LogCode} - {logDetails.LogDetails}
                                     </p>
                                     <p className="text-base text-gray-700">
-                                        <span className="font-semibold text-teal-800">Date:</span> {logDetails.Date}
+                                        <span className="font-semibold text-teal-800">Date:</span> {logDetails.date}
                                     </p>
                                 </div>
                             </div>
                             <div className="flex items-center space-x-10">
-                                <p className="text-base text-gray-700">
-                                    <span
-                                        className="font-semibold text-teal-800">Field Code:</span> {logDetails.fieldCode}
-                                </p>
-                                <p className="text-base text-gray-700">
-                                    <span className="font-semibold text-teal-800">Crop ID:</span> {logDetails.cropId}
-                                </p>
-                                <p className="text-base text-gray-700">
-                                    <span className="font-semibold text-teal-800">Staff ID:</span> {logDetails.staffId}
-                                </p>
+                                {/*<p className="text-base text-gray-700">*/}
+                                {/*    <span*/}
+                                {/*        className="font-semibold text-teal-800">Field Code:</span> {logDetails.fieldCode}*/}
+                                {/*</p>*/}
+                                {/*<p className="text-base text-gray-700">*/}
+                                {/*    <span className="font-semibold text-teal-800">Crop ID:</span> {logDetails.cropId}*/}
+                                {/*</p>*/}
+                                {/*<p className="text-base text-gray-700">*/}
+                                {/*    <span className="font-semibold text-teal-800">Staff ID:</span> {logDetails.staffId}*/}
+                                {/*</p>*/}
                                 <div className="flex space-x-4">
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Observed Image:</span> {logDetails.ObservedImage}
+                                            className="font-semibold text-teal-800">Observed Image:</span> {logDetails.LogImage}
                                     </p>
                                 </div>
                             </div>

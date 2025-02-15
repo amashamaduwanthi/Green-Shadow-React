@@ -1,159 +1,146 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {addNewVehicle} from "../redux/slices/vehicleSlice.ts";
+import { Trash2 } from "react-feather";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteVehicles, getVehicles, saveVehicle} from "../redux/slices/vehicleReducer.ts";
+import { AppDispatch } from "../redux/store.ts";
+import { Vehicle } from "../model/Vehicle.ts";
 
-export function AddNewVehicle (){
-    const vehicle = useSelector((state: any) => state.vehicle);
-    const dispatch = useDispatch();
-    const [VehicleCode,setVehicleCode] = useState('');
-    const [LicensePlateNumber,setLicensePlateNumber] = useState('');
-    const [category,setCategory] = useState('');
-    const [FuelType,setFuelType] =useState('');
-    const [Status, setStatus] = useState('');
-    const [staffId, setStaffId] = useState('');
-    const [Remarks,setRemarks] = useState('');
+function AddNewVehicle() {
+    const vehicles = useSelector((state: any) => state.vehicle);
+    const dispatch = useDispatch<AppDispatch>();
 
-    function handleSubmitVehicle(event: React.FormEvent) {
+    const [vehicleCode, setVehicleCode] = useState("");
+    const [licensePlateNo, setLicensePlateNo] = useState("");
+    const [category, setCategory] = useState("");
+    const [fuelType, setFuelType] = useState("");
+    const [status, setStatus] = useState("");
+    const [staffId, setStaffId] = useState("");
+    const [remarks, setRemarks] = useState("");
+    const [deleteVehicleId, setDeleteVehicleId] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        dispatch(getVehicles());
+    }, [dispatch]);
+
+    const handleAdd = () => {
+        if (!vehicleCode || !licensePlateNo || !category || !fuelType || !status || !staffId || !remarks) {
+            alert("All fields are required!");
+            return;
+        }
+        const newVehicle = new Vehicle(vehicleCode, licensePlateNo, category, fuelType, status, remarks, staffId);
+        dispatch(saveVehicle(newVehicle));
+        alert("Vehicle added successfully!");
+        resetForm();
+    };
+
+    const handleEdit = (vehicle: any) => {
+        setVehicleCode(vehicle.vehicleCode);
+        setLicensePlateNo(vehicle.licensePlateNo);
+        setCategory(vehicle.category);
+        setFuelType(vehicle.fuelType);
+        setStatus(vehicle.status);
+        setStaffId(vehicle.staffId);
+        setRemarks(vehicle.remarks);
+        setIsEditing(true);
+    };
+
+    const handleUpdate = () => {
+        if (!vehicleCode || !licensePlateNo || !category || !fuelType || !status || !staffId || !remarks) {
+            alert("All fields are required!");
+            return;
+        }
+        // Update logic can be implemented later.
+        resetForm();
+    };
+
+    const handleDelete = () => {
         event.preventDefault();
-        dispatch(addNewVehicle({VehicleCode,LicensePlateNumber,category,FuelType,Status,staffId,Remarks}))
-        setVehicleCode('');
-        setLicensePlateNumber('')
-        setCategory('')
-        setFuelType('')
-        setStatus('')
-        setStaffId('')
-        setRemarks('')
-    }
-    return(
-        <>
-            <br/><br/><br/>
-            <div className="flex flex-row justify-between items-start gap-2 pl-40">
-                {/* Form Section - Left Side */}
-                <div className="bg-white shadow-xl rounded-lg p-6 max-w-lg w-full">
-                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Add New Vehicle</h2>
-                    <form className="space-y-4 text-left">
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Vehicle Code:</label>
-                            <input
-                                type="text"
-                                name="VehicleCode"
-                                value={VehicleCode}
-                                onChange={(e) => setVehicleCode(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
+        if(!deleteVehicleId){
+            alert("Vehicle not found.");
+        }
+        dispatch(deleteVehicles(deleteVehicleId));
+        alert("Vehicle deleted successfully.");
+    };
 
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">License Plate Number:</label>
-                            <input
-                                type="text"
-                                name="LicensePlateNumber"
-                                value={LicensePlateNumber}
-                                onChange={(e) => setLicensePlateNumber(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
+    const resetForm = () => {
+        setVehicleCode("");
+        setLicensePlateNo("");
+        setCategory("");
+        setFuelType("");
+        setStatus("");
+        setStaffId("");
+        setRemarks("");
+        setIsEditing(false);
+    };
 
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Category:</label>
-                            <input
-                                type="text"
-                                name="category"
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Fuel Type:</label>
-                            <input
-                                type="text"
-                                name="FuelType"
-                                value={FuelType}
-                                onChange={(e) => setFuelType(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Status:</label>
-                            <input
-                                type="text"
-                                name="status"
-                                value={Status}
-                                onChange={(e) => setStatus(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Staff ID:</label>
-                            <input
-                                type="text"
-                                name="staff_id"
-                                value={staffId}
-                                onChange={(e) => setStaffId(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Remarks:</label>
-                            <input
-                                type="text"
-                                name="Remarks"
-                                value={Remarks}
-                                onChange={(e) => setRemarks(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="mt-4">
-                            <button
-                                type="submit"
-                                onClick={handleSubmitVehicle}
-                                className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-500 transition duration-300"
-                            >
-                                Add Vehicle
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                {/* Table Section - Right Side */}
-                <div className="bg-white shadow-xl rounded-lg p-6 max-w-7xl w-full">
-                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Vehicle Details</h2>
-                    <table className="min-w-full table-auto border-collapse border border-gray-300">
-                        <thead>
-                        <tr  className="bg-teal-600 text-white">
-                            <th className="px-4 py-2 text-left text-gray-700">Vehicle Code</th>
-                            <th className="px-4 py-2 text-left text-gray-700">License Plate Number</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Category</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Fuel Type</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Status</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Staff ID</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Remarks</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {vehicle.map((vehicleDetails: any, index: number) => (
-                            <tr key={index} className="border-b">
-                                <td className="px-4 py-2">{vehicleDetails.VehicleCode}</td>
-                                <td className="px-4 py-2">{vehicleDetails.LicensePlateNumber}</td>
-                                <td className="px-4 py-2">{vehicleDetails.category}</td>
-                                <td className="px-4 py-2">{vehicleDetails.FuelType}</td>
-                                <td className="px-4 py-2">{vehicleDetails.Status}</td>
-                                <td className="px-4 py-2">{vehicleDetails.staffId}</td>
-                                <td className="px-4 py-2">{vehicleDetails.Remarks}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
+    return (
+        <div className="p-6">
+            <div className="grid grid-cols-2 gap-4 mb-4">
+                <input type="text" placeholder="Vehicle Code" value={vehicleCode}
+                       onChange={(e) => setVehicleCode(e.target.value)} className="border p-2 rounded"/>
+                <input type="text" placeholder="License Plate Number" value={licensePlateNo}
+                       onChange={(e) => setLicensePlateNo(e.target.value)} className="border p-2 rounded"/>
+                <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)}
+                       className="border p-2 rounded"/>
+                <input type="text" placeholder="Fuel Type" value={fuelType}
+                       onChange={(e) => setFuelType(e.target.value)} className="border p-2 rounded"/>
+                <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)}
+                       className="border p-2 rounded"/>
+                <input type="text" placeholder="Remarks" value={remarks} onChange={(e) => setRemarks(e.target.value)}
+                       className="border p-2 rounded"/>
+                <input type="text" placeholder="Staff ID" value={staffId} onChange={(e) => setStaffId(e.target.value)}
+                       className="border p-2 rounded"/>
+            </div>
+            <div className="flex justify-end">
+                {isEditing ? (
+                    <button onClick={handleUpdate} className="bg-blue-500 text-white p-2 rounded mr-2">Update</button>
+                ) : (
+                    <button onClick={handleAdd} className="bg-green-500 text-white p-2 rounded mr-2">Add</button>
+                )}
+                {isEditing && (
+                    <button onClick={resetForm} className="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                )}
             </div>
 
-        </>
+            <table className="min-w-full table-auto border-collapse mt-6">
+                <thead>
+                <tr className="bg-teal-600 text-white">
+                    <th className="border px-4 py-2">Vehicle Code</th>
+                    <th className="border px-4 py-2">License Plate No</th>
+                    <th className="border px-4 py-2">Category</th>
+                    <th className="border px-4 py-2">Fuel Type</th>
+                    <th className="border px-4 py-2">Status</th>
+                    <th className="border px-4 py-2">Remarks</th>
+                    <th className="border px-4 py-2">Staff ID</th>
 
-    )
+                    <th className="border px-4 py-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {vehicles.map((vehicle: any, index: number) => (
+                    <tr key={index} onClick={() => handleEdit(vehicle)}
+                        className="hover:cursor-pointer hover:bg-slate-600 hover:text-white">
+                        <td className="border px-4 py-2">{vehicle.vehicleCode}</td>
+                        <td className="border px-4 py-2">{vehicle.licensePlateNo}</td>
+                        <td className="border px-4 py-2">{vehicle.category}</td>
+                        <td className="border px-4 py-2">{vehicle.fuelType}</td>
+                        <td className="border px-4 py-2">{vehicle.status}</td>
+                        <td className="border px-4 py-2">{vehicle.remarks}</td>
+                        <td className="border px-4 py-2">{vehicle.staffId}</td>
+
+                        <td className="border px-4 py-2 text-center">
+                            <button onClick={() => handleDelete(vehicle.vehicleCode)}
+                                    className="bg-red-500 text-white p-2 rounded-lg">
+                                <Trash2/>
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
+
+export default AddNewVehicle;

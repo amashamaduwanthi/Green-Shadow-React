@@ -1,7 +1,7 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {deleteStaff, updateStaff} from "../redux/slices/staffSlice.ts";
+import {deleteStaffMember} from "../redux/slices/staffReducer.ts";
 
 
 export function Staff() {
@@ -45,47 +45,47 @@ export function Staff() {
             setFoundStaff(null);
         }
     }
-    function handleUpdateStaff(event: React.FormEvent) {
-        event.preventDefault();
-
-        if (foundStaff) {
-            // Dispatch the update action with the correct payload structure
-            dispatch(
-                updateStaff({
-                    staffId: foundStaff.staffId,
-                    firstname: newStaffFirstname,
-                    secondname: newStaffSecondname,
-                    position: newPosition,
-                    gender: newGender,
-                    joined_date: newJoined_date,
-                    dob: newdob,
-                    address: newAddress,
-                    contact_no: newContact_no,
-                    email: newEmail,
-                    role: newRole,
-                    vehicleId: newVehicleId,
-                })
-            );
-
-            alert("Staff updated successfully.");
-
-            // Clear form inputs
-            setNewStaffFirstName("");
-            setNewStaffSecondName("");
-            setNewPosition("");
-            setNewGender("");
-            setNewJoined_date("");
-            setNewdob("");
-            setNewContact_no("");
-            setNewEmail("");
-            setNewAddress("");
-            setNewRole("");
-            setNewVehicleId("");
-        } else {
-            alert("Staff not found.");
-            setFoundStaff(null); // Reset foundStaff
-        }
-    }
+    // function handleUpdateStaff(event: React.FormEvent) {
+    //     event.preventDefault();
+    //
+    //     if (foundStaff) {
+    //         // Dispatch the update action with the correct payload structure
+    //         dispatch(
+    //         //     updateStaffMember({
+    //         //         staffId: foundStaff.staffId,
+    //         //         firstname: newStaffFirstname,
+    //         //         secondname: newStaffSecondname,
+    //         //         position: newPosition,
+    //         //         gender: newGender,
+    //         //         joined_date: newJoined_date,
+    //         //         dob: newdob,
+    //         //         address: newAddress,
+    //         //         contact_no: newContact_no,
+    //         //         email: newEmail,
+    //         //         role: newRole,
+    //         //         vehicleId: newVehicleId,
+    //         //     })
+    //         // );
+    //
+    //         // alert("Staff updated successfully.");
+    //
+    //         // Clear form inputs
+    //         // setNewStaffFirstName("");
+    //     //     setNewStaffSecondName("");
+    //     //     setNewPosition("");
+    //     //     setNewGender("");
+    //     //     setNewJoined_date("");
+    //     //     setNewdob("");
+    //     //     setNewContact_no("");
+    //     //     setNewEmail("");
+    //     //     setNewAddress("");
+    //     //     setNewRole("");
+    //     //     setNewVehicleId("");
+    //     // } else {
+    //     //     alert("Staff not found.");
+    //     //     setFoundStaff(null); // Reset foundStaff
+    //     // }
+    // }
 
     function handleDeleteStaffMember(event:React.FormEvent) {
         event.preventDefault();
@@ -93,7 +93,7 @@ export function Staff() {
             alert("Staff Not Found!");
 
         }
-        dispatch(deleteStaff(deleteStaffId));
+        dispatch(deleteStaffMember(deleteStaffId));
         alert("Deleted Successfully");
 
     }

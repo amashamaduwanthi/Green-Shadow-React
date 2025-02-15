@@ -1,247 +1,148 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {addNewStaff} from "../redux/slices/staffSlice.ts";
+import { Trash2 } from "react-feather";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewStaff, deleteStaffMember, getStaffMembers } from "../redux/slices/staffReducer.ts";
+import { AppDispatch } from "../redux/store.ts";
+import { Staff } from "../model/Staff.ts";
 
-export function AddStaffMember() {
-    const staff = useSelector((state:any)=>state.staff);
-    const dispatch = useDispatch();
-    const [staffId, setStaffId] = useState('');
-    const [FirstName,setFirstName] = useState('');
-    const [LastName,setLastName] = useState('');
-    const [Designation,setDesignation] = useState('');
-    const [Gender,setGender] = useState('');
-    const [JoinedDate,setJoinedDate] = useState('');
-    const [DOB,setDOB] = useState('');
-    const [Address,setAddress] = useState('');
-    const [Contact,setContact] = useState('');
-    const [Email,setEmail] = useState('');
-    const [Role,setRole] = useState('');
-    const [VehicleCode,setVehicleCode] = useState('');
+function AddStaffMember() {
+    const staff = useSelector((state: any) => state.staff);
+    const dispatch = useDispatch<AppDispatch>();
 
+    const [staffId, setStaffId] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [gender, setGender] = useState("");
+    const [dob, setDob] = useState("");
+    const [address, setAddress] = useState("");
+    const [contact, setContact] = useState("");
+    const [email, setEmail] = useState("");
+    const [role, setRole] = useState("");
+    const [fieldCode, setFieldCode] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
 
-    function handleSubmitStaff(event: React.FormEvent) {
-        event.preventDefault();
-        dispatch(addNewStaff({staffId,FirstName,LastName,Designation,Gender,JoinedDate,DOB,Address,Contact,Email,Role,VehicleCode}))
-        setStaffId('');
-        setFirstName('');
-        setLastName('');
-        setDesignation('');
-        setGender('');
-        setJoinedDate('');
-        setDOB('');
-        setAddress('');
-        setContact('');
-        setEmail('');
-        setRole('');
-        setVehicleCode('');
+    useEffect(() => {
+        dispatch(getStaffMembers());
+    }, [dispatch]);
 
-    }
+    const handleAdd = () => {
+        if (!staffId || !firstName || !lastName || !gender || !dob || !address || !contact || !email || !role || !fieldCode) {
+            alert("All fields are required!");
+            return;
+        }
+        const newStaff = new Staff(staffId, firstName, lastName, gender, dob, address, contact, email, role, fieldCode);
+        dispatch(addNewStaff(newStaff));
+        resetForm();
+    };
+
+    const handleEdit = (staff: any) => {
+        setStaffId(staff.staffId);
+        setFirstName(staff.firstName);
+        setLastName(staff.lastName);
+        setGender(staff.gender);
+        setDob(staff.dob);
+        setAddress(staff.address);
+        setContact(staff.contact);
+        setEmail(staff.email);
+        setRole(staff.role);
+        setFieldCode(staff.fieldCode);
+        setIsEditing(true);
+    };
+
+    const handleUpdate = () => {
+        if (!staffId || !firstName || !lastName || !gender || !dob || !address || !contact || !email || !role || !fieldCode) {
+            alert("All fields are required!");
+            return;
+        }
+        resetForm();
+    };
+
+    const handleDelete = (staffId: string) => {
+        if (window.confirm("Are you sure you want to delete this staff member?")) {
+            dispatch(deleteStaffMember(staffId));
+            dispatch(getStaffMembers());
+        }
+    };
+
+    const resetForm = () => {
+        setStaffId("");
+        setFirstName("");
+        setLastName("");
+        setGender("");
+        setDob("");
+        setAddress("");
+        setContact("");
+        setEmail("");
+        setRole("");
+        setFieldCode("");
+        setIsEditing(false);
+    };
 
     return (
-        <>
-            <div className="flex flex-row flex-wrap justify-between items-start gap-6 px-6">
-                {/* Form Section - Left Side */}
-                <div className="bg-white shadow-xl rounded-lg p-6 max-w-lg w-full">
-                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Add Staff Member</h2>
-                    <form className="space-y-4">
-                        {/* Staff ID */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Staff ID:</label>
-                            <input
-                                type="text"
-                                name="staffId"
-                                value={staffId}
-                                onChange={(e) => setStaffId(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* First Name */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">First Name:</label>
-                            <input
-                                type="text"
-                                name="FirstName"
-                                value={FirstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Last Name */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Last Name:</label>
-                            <input
-                                type="text"
-                                name="LastName"
-                                value={LastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Designation */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Designation:</label>
-                            <input
-                                type="text"
-                                name="Designation"
-                                value={Designation}
-                                onChange={(e) => setDesignation(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Gender */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Gender:</label>
-                            <input
-                                type="text"
-                                name="Gender"
-                                value={Gender}
-                                onChange={(e) => setGender(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Joined Date */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Joined Date:</label>
-                            <input
-                                type="text"
-                                name="JoinedDate"
-                                value={JoinedDate}
-                                onChange={(e) => setJoinedDate(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* DOB */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">DOB:</label>
-                            <input
-                                type="text"
-                                name="DOB"
-                                value={DOB}
-                                onChange={(e) => setDOB(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Address */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Address:</label>
-                            <input
-                                type="text"
-                                name="Address"
-                                value={Address}
-                                onChange={(e) => setAddress(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Contact */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Contact No:</label>
-                            <input
-                                type="text"
-                                name="Contact"
-                                value={Contact}
-                                onChange={(e) => setContact(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Email */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Email:</label>
-                            <input
-                                type="text"
-                                name="Email"
-                                value={Email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Role */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Role:</label>
-                            <input
-                                type="text"
-                                name="Role"
-                                value={Role}
-                                onChange={(e) => setRole(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Vehicle Code */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Vehicle Code:</label>
-                            <input
-                                type="text"
-                                name="VehicleCode"
-                                value={VehicleCode}
-                                onChange={(e) => setVehicleCode(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="mt-4">
-                            <button
-                                type="submit"
-                                onClick={handleSubmitStaff}
-                                className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-500 transition duration-300"
-                            >
-                                Add Staff Member
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                {/* Staff Details Table */}
-                <div className="bg-white shadow-xl rounded-lg p-6 max-w-7xl w-full">
-                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Staff Details</h2>
-                    <table className="min-w-full table-auto border-collapse border border-gray-300">
-                        <thead>
-                        <tr  className="bg-teal-600 text-white">
-                            <th className="px-4 py-2 text-left text-gray-700">Staff ID</th>
-                            <th className="px-4 py-2 text-left text-gray-700">First Name</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Last Name</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Designation</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Gender</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Joined Date</th>
-                            <th className="px-4 py-2 text-left text-gray-700">DOB</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Address</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Contact</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Email</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Role</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Vehicle Code</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {staff.map((staffDetails: any, index: number) => (
-                            <tr key={index} className="border-b">
-                                <td className="px-4 py-2">{staffDetails.staffId}</td>
-                                <td className="px-4 py-2">{staffDetails.FirstName}</td>
-                                <td className="px-4 py-2">{staffDetails.LastName}</td>
-                                <td className="px-4 py-2">{staffDetails.Designation}</td>
-                                <td className="px-4 py-2">{staffDetails.Gender}</td>
-                                <td className="px-4 py-2">{staffDetails.JoinedDate}</td>
-                                <td className="px-4 py-2">{staffDetails.DOB}</td>
-                                <td className="px-4 py-2">{staffDetails.Address}</td>
-                                <td className="px-4 py-2">{staffDetails.Contact}</td>
-                                <td className="px-4 py-2">{staffDetails.Email}</td>
-                                <td className="px-4 py-2">{staffDetails.Role}</td>
-                                <td className="px-4 py-2">{staffDetails.VehicleCode}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
+        <div className="p-6">
+            <div className="grid grid-cols-2 gap-4 mb-4">
+                <input type="text" placeholder="Staff ID" value={staffId} onChange={(e) => setStaffId(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Gender" value={gender} onChange={(e) => setGender(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="DOB" value={dob} onChange={(e) => setDob(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Contact No" value={contact} onChange={(e) => setContact(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Role" value={role} onChange={(e) => setRole(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Field Code" value={fieldCode} onChange={(e) => setFieldCode(e.target.value)} className="border p-2 rounded" />
+            </div>
+            <div className="flex justify-end">
+                {isEditing ? (
+                    <button onClick={handleUpdate} className="bg-blue-500 text-white p-2 rounded mr-2">Update</button>
+                ) : (
+                    <button onClick={handleAdd} className="bg-green-500 text-white p-2 rounded mr-2">Add</button>
+                )}
+                {isEditing && (
+                    <button onClick={resetForm} className="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                )}
             </div>
 
-        </>
-    )
+            <table className="min-w-full table-auto border-collapse mt-6">
+                <thead>
+                <tr className="bg-teal-600 text-white">
+                    <th className="border px-4 py-2">Staff ID</th>
+                    <th className="border px-4 py-2">First Name</th>
+                    <th className="border px-4 py-2">Last Name</th>
+                    <th className="border px-4 py-2">Gender</th>
+                    <th className="border px-4 py-2">DOB</th>
+                    <th className="border px-4 py-2">Address</th>
+                    <th className="border px-4 py-2">Contact</th>
+                    <th className="border px-4 py-2">Email</th>
+                    <th className="border px-4 py-2">Role</th>
+                    <th className="border px-4 py-2">Field Code</th>
+                    <th className="border px-4 py-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {staff.map((staffDetails: any, index: number) => (
+                    <tr key={index} onClick={() => handleEdit(staffDetails)} className="hover:cursor-pointer hover:bg-slate-600 hover:text-white">
+                        <td className="border px-4 py-2">{staffDetails.staffId}</td>
+                        <td className="border px-4 py-2">{staffDetails.firstName}</td>
+                        <td className="border px-4 py-2">{staffDetails.lastName}</td>
+                        <td className="border px-4 py-2">{staffDetails.gender}</td>
+                        <td className="border px-4 py-2">{staffDetails.dob}</td>
+                        <td className="border px-4 py-2">{staffDetails.address}</td>
+                        <td className="border px-4 py-2">{staffDetails.contact}</td>
+                        <td className="border px-4 py-2">{staffDetails.email}</td>
+                        <td className="border px-4 py-2">{staffDetails.role}</td>
+                        <td className="border px-4 py-2">{staffDetails.fieldCode}</td>
+                        <td className="border px-4 py-2 text-center">
+                            <button onClick={() => handleDelete(staffDetails.staffId)} className="bg-red-500 text-white p-2 rounded-lg">
+                                <Trash2 />
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
+
+export default AddStaffMember;
