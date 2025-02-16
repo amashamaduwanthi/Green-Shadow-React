@@ -2,7 +2,7 @@ import { Trash2 } from "react-feather";
 import {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {deleteField, getFields, saveField} from "../redux/slices/fieldReducer.ts";
+import {deleteField, getFields, saveField, updateField} from "../redux/slices/fieldReducer.ts";
 import {AppDispatch} from "../redux/store.ts";
 import {Field} from "../model/Field.ts";
 
@@ -29,6 +29,7 @@ function AddNewField() {
         }
         const newField=new Field(fieldCode, fieldName, location, extentSize, fieldImage);
         dispatch(saveField(newField));
+        alert("field was added successfully!");
         resetForm();
     };
 
@@ -36,7 +37,7 @@ function AddNewField() {
         setFieldCode(field.fieldCode);
         setFieldName(field.fieldName);
         setLocation(field.location);
-        setExtentSize(field.extentSize);
+        setExtentSize(field.extendSize);
         setFieldImage(field.fieldImage);
         setIsEditing(true);
     };
@@ -46,13 +47,29 @@ function AddNewField() {
             alert("All fields are required!");
             return;
         }
-        // Update logic can be implemented later.
+
+        // Create an updated field object
+        const updatedField = {
+            fieldCode,
+            fieldName,
+            location,
+            extentSize,
+            fieldImage,
+        };
+
+        // Dispatch an update action (assuming you have an updateField action in Redux)
+        dispatch(updateField(updatedField));
+        alert("Field updated successfully!");
+        dispatch(getFields())
+        // Reset the form after update
         resetForm();
     };
+
 
     const handleDelete = (fieldCode: string) => {
         if (window.confirm("Are you sure you want to delete this field?")) {
             dispatch(deleteField(fieldCode));
+            alert("Field delete successfully!");
             dispatch(getFields())
         }
     };

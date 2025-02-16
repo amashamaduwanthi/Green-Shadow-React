@@ -102,7 +102,7 @@ const fieldSlice = createSlice({
 
         builder
             .addCase(updateField.fulfilled, (state, action) => {
-                const index = state.findIndex(field => field.fieldCode === action.payload.fieldCode);
+                const index = state.findIndex((field:Field) => field.fieldCode === action.payload.fieldCode);
                 if (index !== -1) {
                     state[index] = action.payload;
                 }

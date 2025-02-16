@@ -1,7 +1,7 @@
 import { Trash2 } from "react-feather";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteLogs, getLogs, saveLog } from "../redux/slices/logReducer.ts";
+import {deleteLogs, getLogs, saveLog, updateLog} from "../redux/slices/logReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import MonitoringLog from "../model/Log.ts";
 
@@ -28,6 +28,7 @@ function AddNewMonitoringLog() {
         }
         const newLog = new MonitoringLog(logCode, date, observation, logImage);
         dispatch(saveLog(newLog));
+        alert("New log was added successfully!");
         resetForm();
     };
 
@@ -44,13 +45,23 @@ function AddNewMonitoringLog() {
             alert("All fields are required!");
             return;
         }
-        // Update logic can be implemented later.
+        const updatedLog = {
+            logCode,
+            date,
+            observation,
+            logImage,
+        };
+        dispatch(updateLog(updatedLog));
+        alert("Log updated successfully!");
+        dispatch(getLogs());
         resetForm();
     };
 
-    const handleDelete = (LogCode: string) => {
+
+    const handleDelete = (logCode: string) => {
         if (window.confirm("Are you sure you want to delete this log?")) {
-            dispatch(deleteLogs(LogCode));
+            dispatch(deleteLogs(logCode));
+            alert("Log deleted successfully!");
             dispatch(getLogs());
         }
     };

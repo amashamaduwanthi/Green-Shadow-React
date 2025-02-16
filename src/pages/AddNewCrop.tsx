@@ -2,7 +2,7 @@ import { Trash2 } from "react-feather";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {deleteCrops, getCrops, saveCrop} from "../redux/slices/cropReducer.ts";
+import {deleteCrops, getCrops, saveCrop, updateCrop} from "../redux/slices/cropReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import { Crop } from "../model/Crop.ts";
 
@@ -29,6 +29,7 @@ function AddNewCrop() {
         }
         const newCrop = new Crop(cropId, cropName, cropImage, category, season, fieldCode);
         dispatch(saveCrop(newCrop));
+        alert("Crop was added successfully!");
         resetForm();
     };
 
@@ -47,13 +48,26 @@ function AddNewCrop() {
             alert("All fields are required!");
             return;
         }
-        // Update logic can be implemented later.
+        // Create an updated crop object
+        const updatedCrop = {
+            cropId,
+            cropName,
+            cropImage,
+            category,
+            season,
+            fieldCode,
+        };
+        dispatch(updateCrop(updatedCrop));
+        alert("Crop updated successfully!");
+        dispatch(getCrops())
         resetForm();
     };
+
 
     const handleDelete = (cropId: string) => {
         if (window.confirm("Are you sure you want to delete this crop?")) {
             dispatch(deleteCrops(cropId));
+            alert("Crop delete successfully!");
             dispatch(getCrops())
         }
     };

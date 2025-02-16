@@ -1,7 +1,7 @@
 import { Trash2 } from "react-feather";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteStaffMember, getStaffMembers, saveStaff} from "../redux/slices/staffReducer.ts";
+import {deleteStaffMember, getStaffMembers, saveStaff, updateStaffMember} from "../redux/slices/staffReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import { Staff } from "../model/Staff.ts";
 
@@ -40,6 +40,7 @@ function AddStaffMember() {
 
         const newStaff = new Staff(staffId, firstName, lastName, gender, parsedDob, Number(contact), email, address, role, fieldCode);
         dispatch(saveStaff(newStaff));
+        alert("Staff added successfully!");
         resetForm();
     };
 
@@ -62,12 +63,34 @@ function AddStaffMember() {
             alert("All fields are required!");
             return;
         }
+        const parsedDob = new Date(dob);
+        if (isNaN(parsedDob.getTime())) {
+            alert("Please enter a valid date of birth.");
+            return;
+        }
+        const updatedStaff = {
+            staffId,
+            firstName,
+            lastName,
+            gender,
+            dob: parsedDob,
+            address,
+            contact,
+            email,
+            role,
+            fieldCode,
+        };
+        dispatch(updateStaffMember(updatedStaff));
+        alert("Staff details updated successfully!");
+        dispatch(getStaffMembers());
         resetForm();
     };
+
 
     const handleDelete = (staffId: string) => {
         if (window.confirm("Are you sure you want to delete this staff member?")) {
             dispatch(deleteStaffMember(staffId));
+            alert("staff deleted successfully!");
             dispatch(getStaffMembers());
         }
     };

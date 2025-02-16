@@ -6,7 +6,7 @@ import {
 
     deleteEquipments,
     getEquipments,
-    saveEquipment
+    saveEquipment, updateEquipment
 } from "../redux/slices/equipmentReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import {Equipment} from "../model/Equipment.ts";
@@ -34,6 +34,7 @@ function AddNewEquipment() {
         }
         const newEquipment = new Equipment(equipmentId, name, type, status, fieldCode, staffId) ;
         dispatch(saveEquipment(newEquipment));
+        alert("Equipment was added successfully!");
         resetForm();
     };
 
@@ -52,13 +53,25 @@ function AddNewEquipment() {
             alert("All fields are required!");
             return;
         }
-        // Update logic can be implemented later.
+        const updatedEquipment = {
+            equipmentId,
+            name,
+            type,
+            status,
+            fieldCode,
+            staffId,
+        };
+        dispatch(updateEquipment(updatedEquipment));
+        alert("Equipment updated successfully!");
+        dispatch(getEquipments());
         resetForm();
     };
+
 
     const handleDelete = (id: string) => {
         if (window.confirm("Are you sure you want to delete this equipment?")) {
             dispatch(deleteEquipments(id));
+            alert("Equipment was deleted successfully!");
             dispatch(getEquipments());
         }
     };

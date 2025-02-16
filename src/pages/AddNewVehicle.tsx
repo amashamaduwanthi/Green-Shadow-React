@@ -1,7 +1,7 @@
 import { Trash2 } from "react-feather";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteVehicles, getVehicles, saveVehicle} from "../redux/slices/vehicleReducer.ts";
+import {deleteVehicles, getVehicles, saveVehicle, updateVehicles} from "../redux/slices/vehicleReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import { Vehicle } from "../model/Vehicle.ts";
 
@@ -50,9 +50,22 @@ function AddNewVehicle() {
             alert("All fields are required!");
             return;
         }
-        // Update logic can be implemented later.
+        const updatedVehicle = {
+            vehicleCode,
+            licensePlateNo,
+            category,
+            fuelType,
+            status,
+            staffId,
+            remarks,
+        };
+        dispatch(updateVehicles(updatedVehicle));
+        alert("Vehicle updated successfully!");
+        dispatch(getVehicles())
+
         resetForm();
     };
+
 
     const handleDelete = () => {
         event.preventDefault();
