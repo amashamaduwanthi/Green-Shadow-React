@@ -1,7 +1,7 @@
 import { Trash2 } from "react-feather";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewStaff, deleteStaffMember, getStaffMembers } from "../redux/slices/staffReducer.ts";
+import { deleteStaffMember, getStaffMembers, saveStaff} from "../redux/slices/staffReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import { Staff } from "../model/Staff.ts";
 
@@ -30,8 +30,16 @@ function AddStaffMember() {
             alert("All fields are required!");
             return;
         }
-        const newStaff = new Staff(staffId, firstName, lastName, gender, dob, address, contact, email, role, fieldCode);
-        dispatch(addNewStaff(newStaff));
+
+        // Check if dob is a valid date
+        const parsedDob = new Date(dob);
+        if (isNaN(parsedDob.getTime())) {
+            alert("Please enter a valid date of birth.");
+            return;
+        }
+
+        const newStaff = new Staff(staffId, firstName, lastName, gender, parsedDob, Number(contact), email, address, role, fieldCode);
+        dispatch(saveStaff(newStaff));
         resetForm();
     };
 
@@ -42,7 +50,7 @@ function AddStaffMember() {
         setGender(staff.gender);
         setDob(staff.dob);
         setAddress(staff.address);
-        setContact(staff.contact);
+        setContact(staff.contactNo);
         setEmail(staff.email);
         setRole(staff.role);
         setFieldCode(staff.fieldCode);
@@ -128,7 +136,7 @@ function AddStaffMember() {
                         <td className="border px-4 py-2">{staffDetails.gender}</td>
                         <td className="border px-4 py-2">{staffDetails.dob}</td>
                         <td className="border px-4 py-2">{staffDetails.address}</td>
-                        <td className="border px-4 py-2">{staffDetails.contact}</td>
+                        <td className="border px-4 py-2">{staffDetails.contactNo}</td>
                         <td className="border px-4 py-2">{staffDetails.email}</td>
                         <td className="border px-4 py-2">{staffDetails.role}</td>
                         <td className="border px-4 py-2">{staffDetails.fieldCode}</td>

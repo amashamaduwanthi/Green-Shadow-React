@@ -107,7 +107,7 @@ export function Field() {
                         {foundField && (
 
                             <div className="lg:w-1/3 bg-gray-100 p-8 rounded-lg shadow-lg text-left">
-                                <h3 className="text-3xl font-bold text-gray-900 mb-6">Update Field:</h3>
+                                <h3 className="text-3xl font-bold text-gray-900 mb-6"> Field:</h3>
 
 
                                 <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
@@ -121,59 +121,46 @@ export function Field() {
 
                                         <p>
                                             <strong className="text-gray-600">Current Location:</strong>
-                                            <span className="text-gray-900">{foundField.fieldLocation}</span>
+                                            <span className="text-gray-900">{foundField.location}</span>
                                         </p>
 
                                         <p>
                                             <strong className="text-gray-600">Current Extent size:</strong>
-                                            <span className="text-gray-900">{foundField.ExtentSize}</span>
+                                            <span className="text-gray-900">{foundField.extendSize}</span>
                                         </p>
-
-                                        <p>
-                                            <strong className="text-gray-600">Current crop id:</strong>
-                                            <span className="text-gray-900">{foundField.cropId}</span>
-                                        </p>
-                                        <p>
-                                            <strong className="text-gray-600">Current Staff id:</strong>
-                                            <span className="text-gray-900">{foundField.staffId}</span>
-                                        </p>
-
                                         <p>
                                             <strong className="text-gray-600">Current Field Image 1</strong>
-                                            <span className="text-gray-900">{foundField.FieldImage1}</span>
+                                            <span className="text-gray-900">{foundField.fieldImage}</span>
                                         </p>
 
-                                        <p>
-                                            <strong className="text-gray-600">Current Field Image 2</strong>
-                                            <span className="text-gray-900">{foundField.FieldImage2}</span>
-                                        </p>
+
                                     </div>
                                 </div>
 
-                                <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Field Details</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        <input type="text" placeholder="New log Date" value={newFieldCode}
-                                               onChange={(e) => setNewFieldCode(e.target.value)}/>
-                                        <input type="text" placeholder="New Log Details" value={newFieldLocation}
-                                               onChange={(e) => setNewLocation(e.target.value)}/>
-                                        <input type="text" placeholder="New observed Image" value={newExtentSize}
-                                               onChange={(e) => setnewExtentSize(e.target.value)}/>
-                                        <input type="text" placeholder="New Filed code" value={newcropId}
-                                               onChange={(e) => setnewCropId(e.target.value)}/>
-                                        <input type="text" placeholder="New crop Id" value={newstaffId}
-                                               onChange={(e) => setnewStaffId(e.target.value)}/>
+                                {/*<div className="bg-white p-6 rounded-lg shadow-sm">*/}
+                                {/*    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Field Details</h4>*/}
+                                {/*    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">*/}
+                                {/*        <input type="text" placeholder="New log Date" value={newFieldCode}*/}
+                                {/*               onChange={(e) => setNewFieldCode(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New Log Details" value={newFieldLocation}*/}
+                                {/*               onChange={(e) => setNewLocation(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New observed Image" value={newExtentSize}*/}
+                                {/*               onChange={(e) => setnewExtentSize(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New Filed code" value={newcropId}*/}
+                                {/*               onChange={(e) => setnewCropId(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New crop Id" value={newstaffId}*/}
+                                {/*               onChange={(e) => setnewStaffId(e.target.value)}/>*/}
 
-                                        <input type="text" placeholder="New field image 1" value={newFieldImage1}
-                                               onChange={(e) => setnewFieldImage1(e.target.value)}/>
-                                        <input type="text" placeholder="New field image 2" value={newFieldImage2}
-                                               onChange={(e) => setnewFieldImage2(e.target.value)}/>
-                                        <button onClick={handleUpdateField}
-                                                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update
-                                            Field
-                                        </button>
-                                    </div>
-                                </div>
+                                {/*        <input type="text" placeholder="New field image 1" value={newFieldImage1}*/}
+                                {/*               onChange={(e) => setnewFieldImage1(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New field image 2" value={newFieldImage2}*/}
+                                {/*               onChange={(e) => setnewFieldImage2(e.target.value)}/>*/}
+                                {/*        <button onClick={handleUpdateField}*/}
+                                {/*                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update*/}
+                                {/*            Field*/}
+                                {/*        </button>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                             </div>
                         )}
                     </div>
@@ -212,31 +199,22 @@ export function Field() {
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Location:</span> {fieldDetails.fieldLocation}
+                                            className="font-semibold text-teal-800">Location:</span> {fieldDetails.location}
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Extent Size:</span> {fieldDetails.ExtentSize}
+                                            className="font-semibold text-teal-800">Extent Size:</span> {fieldDetails.extendSize}
                                     </p>
                                 </div>
                             </div>
                             <div className="flex items-center space-x-10">
-                                <p className="text-base text-gray-700">
-                                    <span className="font-semibold text-teal-800">Crop ID:</span> {fieldDetails.cropId}
-                                </p>
-                                <p className="text-base text-gray-700">
-                                    <span
-                                        className="font-semibold text-teal-800">Staff ID:</span> {fieldDetails.staffId}
-                                </p>
+
                                 <div className="flex space-x-4">
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Image 1:</span> {fieldDetails.FieldImage1}
+                                            className="font-semibold text-teal-800">Image 1:</span> {fieldDetails.fieldImage}
                                     </p>
-                                    <p className="text-base text-gray-700">
-                                        <span
-                                            className="font-semibold text-teal-800">Image 2:</span> {fieldDetails.FieldImage2}
-                                    </p>
+
                                 </div>
                             </div>
                         </li>

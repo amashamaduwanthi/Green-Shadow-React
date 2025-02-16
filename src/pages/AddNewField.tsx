@@ -143,7 +143,7 @@ function AddNewField() {
                         <td className="border px-4 py-2">{field.fieldCode}</td>
                         <td className="border px-4 py-2">{field.fieldName}</td>
                         <td className="border px-4 py-2">{field.location}</td>
-                        <td className="border px-4 py-2">{field.extentSize}</td>
+                        <td className="border px-4 py-2">{field.extendSize}</td>
                         <td className="border px-4 py-2">{field.fieldImage}</td>
                         <td className="border px-4 py-2 text-center">
                             <button onClick={() => handleDelete(field.fieldName)} className="bg-red-500 text-white p-2 rounded-lg">

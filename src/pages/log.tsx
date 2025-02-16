@@ -100,7 +100,7 @@ export function Log(){
                         {foundLog && (
 
                             <div className="lg:w-1/3 bg-gray-100 p-8 rounded-lg shadow-lg text-left">
-                                <h3 className="text-3xl font-bold text-gray-900 mb-6">Update Log:</h3>
+                                <h3 className="text-3xl font-bold text-gray-900 mb-6"> Log:</h3>
 
 
                                 <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
@@ -109,57 +109,22 @@ export function Log(){
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <p>
                                             <strong className="text-gray-600">Current Date:</strong>
-                                            <span className="text-gray-900">{foundLog.Date}</span>
+                                            <span className="text-gray-900">{foundLog.date}</span>
                                         </p>
 
                                         <p>
                                             <strong className="text-gray-600">Current Log Details:</strong>
-                                            <span className="text-gray-900">{foundLog.LogDetails}</span>
+                                            <span className="text-gray-900">{foundLog.observation}</span>
                                         </p>
 
                                         <p>
                                             <strong className="text-gray-600">Current Observed Image:</strong>
-                                            <span className="text-gray-900">{foundLog.ObservedImage}</span>
+                                            <span className="text-gray-900">{foundLog.LogImage}</span>
                                         </p>
 
-                                        <p>
-                                            <strong className="text-gray-600">Current Field Code:</strong>
-                                            <span className="text-gray-900">{foundLog.fieldCode}</span>
-                                        </p>
-                                        <p>
-                                            <strong className="text-gray-600">Current Crop Id:</strong>
-                                            <span className="text-gray-900">{foundLog.cropId}</span>
-                                        </p>
-
-                                        <p>
-                                            <strong className="text-gray-600">Current staff id</strong>
-                                            <span className="text-gray-900">{foundLog.staffId}</span>
-                                        </p>
                                     </div>
                                 </div>
 
-                                <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Log Details</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        <input type="text" placeholder="New log Date" value={NewDate}
-                                               onChange={(e) => setNewDate(e.target.value)}/>
-                                        <input type="text" placeholder="New Log Details" value={NewLogDetails}
-                                               onChange={(e) => setNewLogDetails(e.target.value)}/>
-                                        <input type="text" placeholder="New observed Image" value={NewObservedImage}
-                                               onChange={(e) => setNewObservedImage(e.target.value)}/>
-                                        <input type="text" placeholder="New Filed code" value={NewfieldCode}
-                                               onChange={(e) => setNewFieldCode(e.target.value)}/>
-                                        <input type="text" placeholder="New crop Id" value={NewcropId}
-                                               onChange={(e) => setNewCropId(e.target.value)}/>
-
-                                        <input type="text" placeholder="New staff id" value={NewstaffId}
-                                               onChange={(e) => setNewStaffId(e.target.value)}/>
-                                        <button onClick={handleUpdateLog}
-                                                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update
-                                            vehicle
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         )}
                     </div>
@@ -193,7 +158,7 @@ export function Log(){
                 </span>
                                 <div className="text-left">
                                     <p className="text-lg font-bold text-gray-800">
-                                        {logDetails.LogCode} - {logDetails.LogDetails}
+                                        {logDetails.LogCode} - {logDetails.observation}
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span className="font-semibold text-teal-800">Date:</span> {logDetails.date}

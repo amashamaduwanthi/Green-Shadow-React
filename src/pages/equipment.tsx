@@ -1,13 +1,16 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {deleteEquipment} from "../redux/slices/equipmentSlice.ts";
+import {useEffect, useState} from "react";
+import {deleteEquipments, getEquipments} from "../redux/slices/equipmentReducer.ts";
+import {AppDispatch} from "../redux/store.ts";
 
 
 export function Equipment(){
+
+    const dispatch = useDispatch<AppDispatch>();
     const equipment = useSelector((state: any) => state.equipment);
-    const dispatch = useDispatch();
-    const [deleteEquipmentName,setDeleteEquipmentName] = useState('');
+
+    const [deleteEquipmentId,setDeleteEquipmentId] = useState('');
 
     const [searchEquipmentName,setSearchEquipmentName] = useState('');
     const [foundEquipment,setFoundEquipment] = useState<any | null>(null);
@@ -17,24 +20,26 @@ export function Equipment(){
     const [newStatus, setNewStatus] = useState('');
     const [newFieldCode, setNewFieldCode] = useState('');
     const [newStaffId, setNewStaffId] = useState('');
-
+    useEffect(() => {
+        dispatch(getEquipments());
+    }, [dispatch]);
 
     function handleDeleteEquipment(event: React.FormEvent){
         event.preventDefault();
-        if(!deleteEquipmentName){
+        if(!deleteEquipmentId){
             alert("Equipment Not Found");
         }
-        dispatch(deleteEquipment(deleteEquipmentName));
+        dispatch(deleteEquipments(deleteEquipmentId));
         alert("Equipment Deleted");
     }
     function handleSearchEquipment(event: React.FormEvent){
         event.preventDefault();
-        const found = equipment.find((s: any) => s.Name === searchEquipmentName);
+        const found = equipment.find((s: any) => s.name === searchEquipmentName);
         if (found) {
             setFoundEquipment(found);
-            setNewEquipmentId(found.EquipmentId);
-            setNewType(found.Type);
-            setNewStatus(found.Status);
+            setNewEquipmentId(found.equipmentId);
+            setNewType(found.type);
+            setNewStatus(found.status);
             setNewFieldCode(found.fieldCode);
             setNewStaffId(found.staffId);
 
@@ -71,8 +76,8 @@ export function Equipment(){
                     <input
                         type="text"
                         placeholder="Enter the equipment Name"
-                        value={deleteEquipmentName}
-                        onChange={(e) => setDeleteEquipmentName(e.target.value)}
+                        value={deleteEquipmentId}
+                        onChange={(e) => setDeleteEquipmentId(e.target.value)}
                         className="w-2000 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none mb-2"
                     />
                     <div className="flex gap-4">
@@ -98,7 +103,7 @@ export function Equipment(){
                         {foundEquipment && (
 
                             <div className="lg:w-1/3 bg-gray-100 p-8 rounded-lg shadow-lg text-left">
-                                <h3 className="text-3xl font-bold text-gray-900 mb-6">Update Equipment:</h3>
+                                <h3 className="text-3xl font-bold text-gray-900 mb-6"> Equipment:</h3>
 
 
                                 <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
@@ -107,17 +112,17 @@ export function Equipment(){
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <p>
                                             <strong className="text-gray-600">Current Equipment Code:</strong>
-                                            <span className="text-gray-900">{foundEquipment.EquipmentId}</span>
+                                            <span className="text-gray-900">{foundEquipment.equipmentId}</span>
                                         </p>
 
                                         <p>
                                             <strong className="text-gray-600">Current Type:</strong>
-                                            <span className="text-gray-900">{foundEquipment.Type}</span>
+                                            <span className="text-gray-900">{foundEquipment.type}</span>
                                         </p>
 
                                         <p>
                                             <strong className="text-gray-600">Current Status:</strong>
-                                            <span className="text-gray-900">{foundEquipment.Status}</span>
+                                            <span className="text-gray-900">{foundEquipment.status}</span>
                                         </p>
                                         <p>
                                             <strong className="text-gray-600">Current Field Code</strong>
@@ -133,28 +138,28 @@ export function Equipment(){
                                     </div>
                                 </div>
 
-                                <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Equipment
-                                        Details</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        <input type="text" placeholder="New log Date" value={newEquipmentId}
-                                               onChange={(e) => setNewEquipmentId(e.target.value)}/>
-                                        <input type="text" placeholder="New Log Details" value={newType}
-                                               onChange={(e) => setNewType(e.target.value)}/>
-                                        <input type="text" placeholder="New observed Image" value={newStatus}
-                                               onChange={(e) => setNewStatus(e.target.value)}/>
-                                        <input type="text" placeholder="New Filed code" value={newFieldCode}
-                                               onChange={(e) => setNewFieldCode(e.target.value)}/>
-                                        <input type="text" placeholder="New crop Id" value={newStaffId}
-                                               onChange={(e) => setNewStaffId(e.target.value)}/>
+                                {/*<div className="bg-white p-6 rounded-lg shadow-sm">*/}
+                                {/*    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Equipment*/}
+                                {/*        Details</h4>*/}
+                                {/*    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">*/}
+                                {/*        <input type="text" placeholder="New log Date" value={newEquipmentId}*/}
+                                {/*               onChange={(e) => setNewEquipmentId(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New Log Details" value={newType}*/}
+                                {/*               onChange={(e) => setNewType(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New observed Image" value={newStatus}*/}
+                                {/*               onChange={(e) => setNewStatus(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New Filed code" value={newFieldCode}*/}
+                                {/*               onChange={(e) => setNewFieldCode(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New crop Id" value={newStaffId}*/}
+                                {/*               onChange={(e) => setNewStaffId(e.target.value)}/>*/}
 
 
-                                        <button onClick={handleUpdateEquipment}
-                                                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update
-                                            Field
-                                        </button>
-                                    </div>
-                                </div>
+                                {/*        <button onClick={handleUpdateEquipment}*/}
+                                {/*                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update*/}
+                                {/*            Field*/}
+                                {/*        </button>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                             </div>
                         )}
                     </div>
@@ -189,15 +194,15 @@ export function Equipment(){
                 </span>
                                 <div className="text-left">
                                     <p className="text-lg font-bold text-gray-800">
-                                        {equipmentDetails.EquipmentId} - {equipmentDetails.Name}
+                                        {equipmentDetails.equipmentId} - {equipmentDetails.name}
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Type:</span> {equipmentDetails.Type}
+                                            className="font-semibold text-teal-800">Type:</span> {equipmentDetails.type}
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Status:</span> {equipmentDetails.Status}
+                                            className="font-semibold text-teal-800">Status:</span> {equipmentDetails.status}
                                     </p>
                                 </div>
                             </div>

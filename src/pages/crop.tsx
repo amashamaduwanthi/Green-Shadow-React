@@ -108,7 +108,7 @@ export function Crop(){
                         {foundCrop && (
 
                             <div className="lg:w-1/3 bg-gray-100 p-8 rounded-lg shadow-lg text-left">
-                                <h3 className="text-3xl font-bold text-gray-900 mb-6">Update Crop:</h3>
+                                <h3 className="text-3xl font-bold text-gray-900 mb-6"> Crop:</h3>
 
 
                                 <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
@@ -121,13 +121,8 @@ export function Crop(){
                                         </p>
 
                                         <p>
-                                            <strong className="text-gray-600">Current scientificName:</strong>
-                                            <span className="text-gray-900">{foundCrop.scientificName}</span>
-                                        </p>
-
-                                        <p>
                                             <strong className="text-gray-600">Current image:</strong>
-                                            <span className="text-gray-900">{foundCrop.image}</span>
+                                            <span className="text-gray-900">{foundCrop.cropImage}</span>
                                         </p>
                                         <p>
                                             <strong className="text-gray-600">Current category</strong>
@@ -148,30 +143,30 @@ export function Crop(){
                                     </div>
                                 </div>
 
-                                <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Crop
-                                        Details</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        <input type="text" placeholder="New crop Name" value={newCropName}
-                                               onChange={(e) => setNewCropName(e.target.value)}/>
-                                        <input type="text" placeholder="New Scientific Name" value={newScientificName}
-                                               onChange={(e) => setNewScientificName(e.target.value)}/>
-                                        <input type="text" placeholder="New  Image" value={newImage}
-                                               onChange={(e) => setNewImage(e.target.value)}/>
-                                        <input type="text" placeholder="New Category" value={newCategory}
-                                               onChange={(e) => setNewCategory(e.target.value)}/>
-                                        <input type="text" placeholder="New Season" value={newSeason}
-                                               onChange={(e) => setNewSeason(e.target.value)}/>
-                                        <input type="text" placeholder="New Field Code" value={newFieldCode}
-                                               onChange={(e) => setNewFieldCode(e.target.value)}/>
+                                {/*<div className="bg-white p-6 rounded-lg shadow-sm">*/}
+                                {/*    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Crop*/}
+                                {/*        Details</h4>*/}
+                                {/*    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">*/}
+                                {/*        <input type="text" placeholder="New crop Name" value={newCropName}*/}
+                                {/*               onChange={(e) => setNewCropName(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New Scientific Name" value={newScientificName}*/}
+                                {/*               onChange={(e) => setNewScientificName(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New  Image" value={newImage}*/}
+                                {/*               onChange={(e) => setNewImage(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New Category" value={newCategory}*/}
+                                {/*               onChange={(e) => setNewCategory(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New Season" value={newSeason}*/}
+                                {/*               onChange={(e) => setNewSeason(e.target.value)}/>*/}
+                                {/*        <input type="text" placeholder="New Field Code" value={newFieldCode}*/}
+                                {/*               onChange={(e) => setNewFieldCode(e.target.value)}/>*/}
 
 
-                                        <button onClick={handleUpdateCrop}
-                                                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update
-                                            Field
-                                        </button>
-                                    </div>
-                                </div>
+                                {/*        <button onClick={handleUpdateCrop}*/}
+                                {/*                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update*/}
+                                {/*            Field*/}
+                                {/*        </button>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                             </div>
                         )}
                     </div>
@@ -208,16 +203,12 @@ export function Crop(){
                                     <p className="text-lg font-bold text-gray-800">
                                         {cropDetails.cropId} - {cropDetails.cropName}
                                     </p>
-                                    <p className="text-base text-gray-700">
-                                        <span className="font-semibold text-teal-800">Scientific Name:</span>{' '}
-                                        {cropDetails.scientificName}
-                                    </p>
                                 </div>
                             </div>
                             <div className="flex items-center space-x-10">
                                 <p className="text-base text-gray-700">
                                     <span className="font-semibold text-teal-800">Image URL:</span>{' '}
-                                    {cropDetails.image}
+                                    {cropDetails.cropImage}
                                 </p>
                                 <p className="text-base text-gray-700">
                                     <span className="font-semibold text-teal-800">Category:</span>{' '}

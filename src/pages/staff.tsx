@@ -1,12 +1,13 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {deleteStaffMember} from "../redux/slices/staffReducer.ts";
+import {useEffect, useState} from "react";
+import {deleteStaffMember, getStaffMembers} from "../redux/slices/staffReducer.ts";
+import {AppDispatch} from "../redux/store.ts";
 
 
 export function Staff() {
     const staff = useSelector((state: any) => state.staff);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const [deleteStaffId,setDeleteStaffId] = useState('');
 
     const [searchStaffId,setSearchStaffId] = useState('');
@@ -23,6 +24,9 @@ export function Staff() {
     const [newAddress, setNewAddress] = useState('');
     const [newRole,setNewRole] = useState('');
     const [newVehicleId, setNewVehicleId] = useState('');
+    useEffect(() => {
+        dispatch(getStaffMembers());
+    }, [dispatch]);
 
     function handleSearchStaff(event:React.FormEvent){
         event.preventDefault();
@@ -45,47 +49,6 @@ export function Staff() {
             setFoundStaff(null);
         }
     }
-    // function handleUpdateStaff(event: React.FormEvent) {
-    //     event.preventDefault();
-    //
-    //     if (foundStaff) {
-    //         // Dispatch the update action with the correct payload structure
-    //         dispatch(
-    //         //     updateStaffMember({
-    //         //         staffId: foundStaff.staffId,
-    //         //         firstname: newStaffFirstname,
-    //         //         secondname: newStaffSecondname,
-    //         //         position: newPosition,
-    //         //         gender: newGender,
-    //         //         joined_date: newJoined_date,
-    //         //         dob: newdob,
-    //         //         address: newAddress,
-    //         //         contact_no: newContact_no,
-    //         //         email: newEmail,
-    //         //         role: newRole,
-    //         //         vehicleId: newVehicleId,
-    //         //     })
-    //         // );
-    //
-    //         // alert("Staff updated successfully.");
-    //
-    //         // Clear form inputs
-    //         // setNewStaffFirstName("");
-    //     //     setNewStaffSecondName("");
-    //     //     setNewPosition("");
-    //     //     setNewGender("");
-    //     //     setNewJoined_date("");
-    //     //     setNewdob("");
-    //     //     setNewContact_no("");
-    //     //     setNewEmail("");
-    //     //     setNewAddress("");
-    //     //     setNewRole("");
-    //     //     setNewVehicleId("");
-    //     // } else {
-    //     //     alert("Staff not found.");
-    //     //     setFoundStaff(null); // Reset foundStaff
-    //     // }
-    // }
 
     function handleDeleteStaffMember(event:React.FormEvent) {
         event.preventDefault();
@@ -173,7 +136,7 @@ export function Staff() {
                 </span>
                                 <div className="text-left">
                                     <p className="text-lg font-bold text-gray-800">
-                                        {staffDetails.FirstName} {staffDetails.LastName} - {staffDetails.Designation}
+                                        {staffDetails.firstName} {staffDetails.lastName}
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
@@ -181,33 +144,30 @@ export function Staff() {
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
-                                            className="font-semibold text-teal-800">Gender:</span> {staffDetails.Gender}
+                                            className="font-semibold text-teal-800">Gender:</span> {staffDetails.gender}
                                     </p>
+
                                     <p className="text-base text-gray-700">
-                                        <span
-                                            className="font-semibold text-teal-800">Joined Date:</span> {staffDetails.JoinedDate}
-                                    </p>
-                                    <p className="text-base text-gray-700">
-                                        <span className="font-semibold text-teal-800">DOB:</span> {staffDetails.DOB}
+                                        <span className="font-semibold text-teal-800">DOB:</span> {staffDetails.dob}
                                     </p>
                                 </div>
                             </div>
                             <div className="flex items-center space-x-10">
                                 <p className="text-base text-gray-700">
-                                    <span className="font-semibold text-teal-800">Address:</span> {staffDetails.Address}
+                                    <span className="font-semibold text-teal-800">Address:</span> {staffDetails.address}
                                 </p>
                                 <p className="text-base text-gray-700">
-                                    <span className="font-semibold text-teal-800">Contact:</span> {staffDetails.Contact}
+                                    <span className="font-semibold text-teal-800">Contact:</span> {staffDetails.contactNo}
                                 </p>
                                 <p className="text-base text-gray-700">
-                                    <span className="font-semibold text-teal-800">Email:</span> {staffDetails.Email}
+                                    <span className="font-semibold text-teal-800">Email:</span> {staffDetails.email}
                                 </p>
                                 <p className="text-base text-gray-700">
-                                    <span className="font-semibold text-teal-800">Role:</span> {staffDetails.Role}
+                                    <span className="font-semibold text-teal-800">Role:</span> {staffDetails.role}
                                 </p>
                                 <p className="text-base text-gray-700">
                                     <span
-                                        className="font-semibold text-teal-800">Vehicle Code:</span> {staffDetails.VehicleCode}
+                                        className="font-semibold text-teal-800">Field Code:</span> {staffDetails.fieldCode}
                                 </p>
                             </div>
                         </li>
@@ -216,147 +176,52 @@ export function Staff() {
 
                 {foundStaff && (
                     <div className="max-w-4xl mx-auto bg-gray-100 p-8 rounded-lg shadow-lg mt-8 text-left">
-                        <h3 className="text-3xl font-bold text-gray-900 mb-6">Update Staff</h3>
+                        <h3 className="text-3xl font-bold text-gray-900 mb-6"> Staff</h3>
 
                         <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
                             <h4 className="text-xl font-semibold text-gray-700 mb-4">Current Staff Details</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <p>
                                     <strong className="text-gray-600">First Name:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.FirstName}</span>
+                                    <span className="text-gray-900">{foundStaff.firstName}</span>
                                 </p>
                                 <p>
                                     <strong className="text-gray-600">Last Name:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.LastName}</span>
-                                </p>
-                                <p>
-                                    <strong className="text-gray-600">Designation:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.Designation}</span>
+                                    <span className="text-gray-900">{foundStaff.lastName}</span>
                                 </p>
                                 <p>
                                     <strong className="text-gray-600">Gender:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.Gender}</span>
-                                </p>
-                                <p>
-                                    <strong className="text-gray-600">Joined Date:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.JoinedDate}</span>
+                                    <span className="text-gray-900">{foundStaff.gender}</span>
                                 </p>
                                 <p>
                                     <strong className="text-gray-600">DOB:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.DOB}</span>
+                                    <span className="text-gray-900">{foundStaff.dob}</span>
                                 </p>
                                 <p>
                                     <strong className="text-gray-600">Address:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.Address}</span>
+                                    <span className="text-gray-900">{foundStaff.address}</span>
                                 </p>
                                 <p>
                                     <strong className="text-gray-600">Email:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.Email}</span>
+                                    <span className="text-gray-900">{foundStaff.email}</span>
                                 </p>
                                 <p>
                                     <strong className="text-gray-600">Contact:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.Contact}</span>
+                                    <span className="text-gray-900">{foundStaff.contactNo}</span>
                                 </p>
                                 <p>
                                     <strong className="text-gray-600">Role:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.Role}</span>
+                                    <span className="text-gray-900">{foundStaff.role}</span>
                                 </p>
                                 <p>
-                                    <strong className="text-gray-600">Vehicle ID:</strong>{" "}
-                                    <span className="text-gray-900">{foundStaff.VehicleCode}</span>
+                                    <strong className="text-gray-600">Field Code:</strong>{" "}
+                                    <span className="text-gray-900">{foundStaff.fieldCode}</span>
                                 </p>
                             </div>
                         </div>
 
-                        <div className="bg-white p-6 rounded-lg shadow-sm">
-                            <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Staff Details</h4>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <input
-                                    type="text"
-                                    value={newStaffFirstname}
-                                    onChange={(e) => setNewStaffFirstName(e.target.value)}
-                                    placeholder="New Staff first Name"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="text"
-                                    value={newStaffSecondname}
-                                    onChange={(e) => setNewStaffSecondName(e.target.value)}
-                                    placeholder="New Staff second Name"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="text"
-                                    value={newPosition}
-                                    onChange={(e) => setNewPosition(e.target.value)}
-                                    placeholder="New Position"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="text"
-                                    value={newGender}
-                                    onChange={(e) => setNewGender(e.target.value)}
-                                    placeholder="New Gender"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="date"
-                                    value={newJoined_date}
-                                    onChange={(e) => setNewJoined_date(e.target.value)}
-                                    placeholder="New Joined Date"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="date"
-                                    value={newdob}
-                                    onChange={(e) => setNewdob(e.target.value)}
-                                    placeholder="New Date of Birth"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="text"
-                                    value={newContact_no}
-                                    onChange={(e) => setNewContact_no(e.target.value)}
-                                    placeholder="New Contact No"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="email"
-                                    value={newEmail}
-                                    onChange={(e) => setNewEmail(e.target.value)}
-                                    placeholder="New Email"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="text"
-                                    value={newAddress}
-                                    onChange={(e) => setNewAddress(e.target.value)}
-                                    placeholder="New Address"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="text"
-                                    value={newRole}
-                                    onChange={(e) => setNewRole(e.target.value)}
-                                    placeholder="New Role"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                                <input
-                                    type="text"
-                                    value={newVehicleId}
-                                    onChange={(e) => setNewVehicleId(e.target.value)}
-                                    placeholder="New Vehicle ID"
-                                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                />
-                            </div>
-                        </div>
 
-                        <button
-                            onClick={handleUpdateStaff}
-                            className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                        >
-                            Update Staff
-                        </button>
+
                     </div>
                 )}
             </div>

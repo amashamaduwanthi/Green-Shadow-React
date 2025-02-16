@@ -1,151 +1,131 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {addNewEquipment} from "../redux/slices/equipmentSlice.ts";
+import { Trash2 } from "react-feather";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export function AddNewEquipment(){
-    const equipment=useSelector((state:any)=>state.equipment);
-    const dispatch = useDispatch();
+import {
 
-    const [EquipmentId, setEquipmentId] = useState('');
-    const [Name, setName] = useState('');
-    const [Type, setType] = useState('');
-    const [Status, setStatus] = useState('');
-    const [fieldCode, setFieldCode] = useState('');
-    const [staffId, setStaffId] = useState('');
+    deleteEquipments,
+    getEquipments,
+    saveEquipment
+} from "../redux/slices/equipmentReducer.ts";
+import { AppDispatch } from "../redux/store.ts";
+import {Equipment} from "../model/Equipment.ts";
 
-    function handleSubmitEquipment(event: React.FormEvent) {
-        event.preventDefault();
-        dispatch(addNewEquipment({EquipmentId,Name,Type,Status,fieldCode,staffId}))
-        setEquipmentId('');
-        setName('');
-        setType('');
-        setStatus('');
-        setFieldCode('');
-        setStaffId('');
-    }
-    return(
-        <>
-            <br/>
-            <div className="flex flex-row flex-wrap justify-between items-start gap-6 px-6">
-                {/* Form Section - Left Side */}
-                <div className="bg-white shadow-xl rounded-lg p-6 max-w-lg w-full">
-                    <h2 className="text-2xl font-semibold text-gray-500 mb-6">Add Equipment</h2>
-                    <form className="space-y-4">
-                        {/* Equipment ID */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Equipment Id:</label>
-                            <input
-                                type="text"
-                                name="equipment_id"
-                                value={EquipmentId}
-                                onChange={(e) => setEquipmentId(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
+function AddNewEquipment() {
+    const equipments = useSelector((state: any) => state.equipment);
+    const dispatch = useDispatch<AppDispatch>();
 
-                        {/* Name */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Name:</label>
-                            <input
-                                type="text"
-                                name="name"
-                                value={Name}
-                                onChange={(e) => setName(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
+    const [equipmentId, setEquipmentId] = useState("");
+    const [name, setName] = useState("");
+    const [type, setType] = useState("");
+    const [status, setStatus] = useState("");
+    const [fieldCode, setFieldCode] = useState("");
+    const [staffId, setStaffId] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
 
-                        {/* Type */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Type:</label>
-                            <input
-                                type="text"
-                                name="type"
-                                value={Type}
-                                onChange={(e) => setType(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
+    useEffect(() => {
+        dispatch(getEquipments());
+    }, [dispatch]);
 
-                        {/* Status */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Status:</label>
-                            <input
-                                type="text"
-                                name="status"
-                                value={Status}
-                                onChange={(e) => setStatus(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
+    const handleAdd = () => {
+        if (!equipmentId || !name || !type || !status || !fieldCode || !staffId) {
+            alert("All fields are required!");
+            return;
+        }
+        const newEquipment = new Equipment(equipmentId, name, type, status, fieldCode, staffId) ;
+        dispatch(saveEquipment(newEquipment));
+        resetForm();
+    };
 
-                        {/* Field Code */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Field Code:</label>
-                            <input
-                                type="text"
-                                name="field_code"
-                                value={fieldCode}
-                                onChange={(e) => setFieldCode(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
+    const handleEdit = (item: any) => {
+        setEquipmentId(item.equipmentId);
+        setName(item.name);
+        setType(item.type);
+        setStatus(item.status);
+        setFieldCode(item.fieldCode);
+        setStaffId(item.staffId);
+        setIsEditing(true);
+    };
 
-                        {/* Staff ID */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium">Staff Id:</label>
-                            <input
-                                type="text"
-                                name="staff_id"
-                                value={staffId}
-                                onChange={(e) => setStaffId(e.target.value)}
-                                className="p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-400 focus:outline-none"
-                            />
-                        </div>
+    const handleUpdate = () => {
+        if (!equipmentId || !name || !type || !status || !fieldCode || !staffId) {
+            alert("All fields are required!");
+            return;
+        }
+        // Update logic can be implemented later.
+        resetForm();
+    };
 
-                        {/* Submit Button */}
-                        <div className="mt-4">
-                            <button
-                                type="submit"
-                                onClick={handleSubmitEquipment}
-                                className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-500 transition duration-300"
-                            >
-                                Add Equipment
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    const handleDelete = (id: string) => {
+        if (window.confirm("Are you sure you want to delete this equipment?")) {
+            dispatch(deleteEquipments(id));
+            dispatch(getEquipments());
+        }
+    };
 
-                {/* Equipment Details Table */}
-                <div className="bg-white shadow-xl rounded-lg p-6 max-w-7xl w-full">
-                    <h2 className="text-2xl font-semibold text-teal-900 mb-6">Equipment Details</h2>
-                    <table className="min-w-full table-auto border-collapse border border-gray-300">
-                        <thead>
-                        <tr  className="bg-teal-600 text-white">
-                            <th className="px-4 py-2 text-left text-gray-700">Equipment ID</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Name</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Type</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Status</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Field Code</th>
-                            <th className="px-4 py-2 text-left text-gray-700">Staff ID</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {equipment.map((equipmentDetails: any, index: number) => (
-                            <tr key={index} className="border-b">
-                                <td className="px-4 py-2">{equipmentDetails.EquipmentId}</td>
-                                <td className="px-4 py-2">{equipmentDetails.Name}</td>
-                                <td className="px-4 py-2">{equipmentDetails.Type}</td>
-                                <td className="px-4 py-2">{equipmentDetails.Status}</td>
-                                <td className="px-4 py-2">{equipmentDetails.fieldCode}</td>
-                                <td className="px-4 py-2">{equipmentDetails.staffId}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
+    const resetForm = () => {
+        setEquipmentId("");
+        setName("");
+        setType("");
+        setStatus("");
+        setFieldCode("");
+        setStaffId("");
+        setIsEditing(false);
+    };
+
+    return (
+        <div className="p-6">
+            <div className="grid grid-cols-2 gap-4 mb-4">
+                <input type="text" placeholder="Equipment ID" value={equipmentId} onChange={(e) => setEquipmentId(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Field Code" value={fieldCode} onChange={(e) => setFieldCode(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Staff ID" value={staffId} onChange={(e) => setStaffId(e.target.value)} className="border p-2 rounded" />
+            </div>
+            <div className="flex justify-end">
+                {isEditing ? (
+                    <button onClick={handleUpdate} className="bg-blue-500 text-white p-2 rounded mr-2">Update</button>
+                ) : (
+                    <button onClick={handleAdd} className="bg-green-500 text-white p-2 rounded mr-2">Add</button>
+                )}
+                {isEditing && (
+                    <button onClick={resetForm} className="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                )}
             </div>
 
-        </>
-    )
+            <table className="min-w-full table-auto border-collapse mt-6">
+                <thead>
+                <tr className="bg-teal-600 text-white">
+                    <th className="border px-4 py-2">Equipment ID</th>
+                    <th className="border px-4 py-2">Name</th>
+                    <th className="border px-4 py-2">Type</th>
+                    <th className="border px-4 py-2">Status</th>
+                    <th className="border px-4 py-2">Field Code</th>
+                    <th className="border px-4 py-2">Staff ID</th>
+                    <th className="border px-4 py-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {equipments.map((item: any, index: number) => (
+                    <tr key={index} onClick={() => handleEdit(item)} className="hover:cursor-pointer hover:bg-slate-600 hover:text-white">
+                        <td className="border px-4 py-2">{item.equipmentId}</td>
+                        <td className="border px-4 py-2">{item.name}</td>
+                        <td className="border px-4 py-2">{item.type}</td>
+                        <td className="border px-4 py-2">{item.status}</td>
+                        <td className="border px-4 py-2">{item.fieldCode}</td>
+                        <td className="border px-4 py-2">{item.staffId}</td>
+                        <td className="border px-4 py-2 text-center">
+                            <button onClick={() => handleDelete(item.equipmentId)} className="bg-red-500 text-white p-2 rounded-lg">
+                                <Trash2 />
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
+
+export default AddNewEquipment;

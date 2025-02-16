@@ -1,7 +1,7 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {deleteVehicle, deleteVehicles, getVehicles, updateVehicles} from "../redux/slices/vehicleReducer.ts";
+import { deleteVehicles, getVehicles, updateVehicles} from "../redux/slices/vehicleReducer.ts";
 import {AppDispatch} from "../redux/store.ts";
 
 
@@ -121,7 +121,7 @@ export function Vehicle() {
                         {foundVehicle && (
 
                             <div className="lg:w-1/3 bg-gray-100 p-8 rounded-lg shadow-lg text-left">
-                                <h3 className="text-3xl font-bold text-gray-900 mb-6">Update Vehicle:</h3>
+                                <h3 className="text-3xl font-bold text-gray-900 mb-6"> Vehicle:</h3>
 
 
                                 <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
@@ -130,7 +130,7 @@ export function Vehicle() {
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <p>
                                             <strong className="text-gray-600">Current Vehicle No:</strong>
-                                            <span className="text-gray-900">{foundVehicle.VehicleCode}</span>
+                                            <span className="text-gray-900">{foundVehicle.vehicleCode}</span>
                                         </p>
 
                                         <p>
@@ -140,12 +140,12 @@ export function Vehicle() {
 
                                         <p>
                                             <strong className="text-gray-600">Current Status:</strong>
-                                            <span className="text-gray-900">{foundVehicle.Status}</span>
+                                            <span className="text-gray-900">{foundVehicle.status}</span>
                                         </p>
 
                                         <p>
                                             <strong className="text-gray-600">Current Fuel type:</strong>
-                                            <span className="text-gray-900">{foundVehicle.FuelType}</span>
+                                            <span className="text-gray-900">{foundVehicle.fuelType}</span>
                                         </p>
                                         <p>
                                             <strong className="text-gray-600">Current Staff Id:</strong>
@@ -154,33 +154,12 @@ export function Vehicle() {
 
                                         <p>
                                             <strong className="text-gray-600">Current Remark:</strong>
-                                            <span className="text-gray-900">{foundVehicle.Remarks}</span>
+                                            <span className="text-gray-900">{foundVehicle.remarks}</span>
                                         </p>
                                     </div>
                                 </div>
 
-                                <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h4 className="text-xl font-semibold text-gray-700 mb-4">Update Vehicle Details</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        <input type="text" placeholder="New vehicle code" value={NewVehicleCode}
-                                               onChange={(e) => setNewVehicleCode(e.target.value)}/>
-                                        <input type="text" placeholder="New category" value={Newcategory}
-                                               onChange={(e) => setNewCategory(e.target.value)}/>
-                                        <input type="text" placeholder="New status" value={NewStatus}
-                                               onChange={(e) => setNewStatus(e.target.value)}/>
-                                        <input type="text" placeholder="New fuel type" value={NewFuelType}
-                                               onChange={(e) => setNewFuelType(e.target.value)}/>
-                                        <input type="text" placeholder="New Staff Id" value={NewstaffId}
-                                               onChange={(e) => setNewStaffId(e.target.value)}/>
 
-                                        <input type="text" placeholder="New remark" value={NewRemarks}
-                                               onChange={(e) => setNewRemarks(e.target.value)}/>
-                                        <button onClick={handleUpdateVehicle}
-                                                className="w-full bg-indigo-600 text-white py-3 px-4 mt-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Update
-                                            vehicle
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         )}
                     </div>
@@ -213,7 +192,7 @@ export function Vehicle() {
                 </span>
                                 <div className="text-left">
                                     <p className="text-lg font-bold text-gray-800">
-                                        {vehicleDetails.VehicleCode} - {vehicleDetails.LicensePlateNumber}
+                                        {vehicleDetails.vehicleCode} - {vehicleDetails.licensePlateNumber}
                                     </p>
                                     <p className="text-base text-gray-700">
                                         <span
