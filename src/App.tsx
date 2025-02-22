@@ -16,6 +16,10 @@ import AddNewCrop from "./pages/AddNewCrop.tsx";
 import AddStaffMember from "./pages/AddStaffMember.tsx";
 import AddNewMonitoringLog from "./pages/AddNewMonitoringLog.tsx";
 import './App.css'
+import AuthLayout from "./components/AuthLayOut.tsx";
+
+import {Signup} from "./pages/SignUp.tsx";
+import SignIn from "./pages/SignIn.tsx";
 
 
 
@@ -23,10 +27,20 @@ import './App.css'
 function App() {
     const routes=createBrowserRouter([
         {
+            path: "",
+            element: <AuthLayout />,
+            children: [
+                { path: "/SignIn", element: <SignIn /> },
+                { path: "", element: <Signup /> },
+            ],
+        },
+
+
+        {
             path:'',
             element:<RootLayout/>,
             children:[
-                {path:'',element:<Dashboard/>},
+                {path:'/dashboard',element:<Dashboard/>},
                 {path:'/staff',element:<Staff/>},
                        {path:'/staff/Add',element:<AddStaffMember/>},
                 {path:'/field',element:<Field/>},

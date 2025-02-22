@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {deleteCrops, getCrops, saveCrop, updateCrop} from "../redux/slices/cropReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import { Crop } from "../model/Crop.ts";
-
+import Swal from "sweetalert2";
 function AddNewCrop() {
     const crops = useSelector((state: any) => state.crop);
     const dispatch = useDispatch<AppDispatch>();
@@ -29,7 +29,12 @@ function AddNewCrop() {
         }
         const newCrop = new Crop(cropId, cropName, cropImage, category, season, fieldCode);
         dispatch(saveCrop(newCrop));
-        alert("Crop was added successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Added Successful!",
+            text: "Crop Adding Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         resetForm();
     };
 
@@ -58,7 +63,12 @@ function AddNewCrop() {
             fieldCode,
         };
         dispatch(updateCrop(updatedCrop));
-        alert("Crop updated successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Update Successful!",
+            text: "Crop Updated Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         dispatch(getCrops())
         resetForm();
     };
@@ -67,7 +77,12 @@ function AddNewCrop() {
     const handleDelete = (cropId: string) => {
         if (window.confirm("Are you sure you want to delete this crop?")) {
             dispatch(deleteCrops(cropId));
-            alert("Crop delete successfully!");
+            Swal.fire({
+                icon: "success",
+                title: "Delete Successful!",
+                text: "Delete Successfully!",
+                confirmButtonColor: "#3085d6",
+            })
             dispatch(getCrops())
         }
     };

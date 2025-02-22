@@ -2,7 +2,7 @@ import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {deleteCrops, getCrops} from "../redux/slices/cropReducer.ts";
-
+import Swal from "sweetalert2";
 
 export function Crop(){
     const crop = useSelector((state:any)=>state.crop);
@@ -12,12 +12,12 @@ export function Crop(){
     const [searchCropId,setSearchCropId] = useState('');
     const [foundCrop,setFoundCrop] = useState<any | null>(null);
 
-    const [newCropName, setNewCropName] = useState('');
-    const [newScientificName, setNewScientificName] = useState('');
-    const [newImage, setNewImage] = useState('');
-    const [newCategory, setNewCategory] = useState('');
-    const [newSeason, setNewSeason] = useState('');
-    const [newFieldCode, setNewFieldCode] = useState('');
+    const [ setNewCropName] = useState('');
+    const [ setNewScientificName] = useState('');
+    const [setNewImage] = useState('');
+    const [ setNewCategory] = useState('');
+    const [ setNewSeason] = useState('');
+    const [ setNewFieldCode] = useState('');
     useEffect(() => {
         dispatch(getCrops());
     }, [dispatch]);
@@ -29,6 +29,12 @@ export function Crop(){
 
         }
         dispatch(deleteCrops(deleteCropCode));
+        Swal.fire({
+            icon: "success",
+            title: "Delete Successful!",
+            text: "Delete Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         setDeleteCropCode('');
     }
     function handleSearchCrop(event: React.FormEvent) {
@@ -47,14 +53,16 @@ export function Crop(){
 
 
         } else {
-            alert('Crop not found.');
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
             setFoundCrop(null);
         }
 
 
-    }
-    function handleUpdateCrop(event: React.FormEvent) {
-        event.preventDefault();
     }
 
     return (

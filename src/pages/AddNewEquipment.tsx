@@ -1,7 +1,7 @@
 import { Trash2 } from "react-feather";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import Swal from "sweetalert2";
 import {
 
     deleteEquipments,
@@ -34,7 +34,12 @@ function AddNewEquipment() {
         }
         const newEquipment = new Equipment(equipmentId, name, type, status, fieldCode, staffId) ;
         dispatch(saveEquipment(newEquipment));
-        alert("Equipment was added successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Equipment Successful!",
+            text: "Equipment  added successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         resetForm();
     };
 
@@ -62,7 +67,12 @@ function AddNewEquipment() {
             staffId,
         };
         dispatch(updateEquipment(updatedEquipment));
-        alert("Equipment updated successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Update Successful!",
+            text: "Equipment  updated successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         dispatch(getEquipments());
         resetForm();
     };
@@ -71,7 +81,12 @@ function AddNewEquipment() {
     const handleDelete = (id: string) => {
         if (window.confirm("Are you sure you want to delete this equipment?")) {
             dispatch(deleteEquipments(id));
-            alert("Equipment was deleted successfully!");
+            Swal.fire({
+                icon: "success",
+                title: "Delete Successful!",
+                text: "Equipment  deleted successfully!",
+                confirmButtonColor: "#3085d6",
+            })
             dispatch(getEquipments());
         }
     };

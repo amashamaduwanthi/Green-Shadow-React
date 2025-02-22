@@ -1,8 +1,9 @@
 import {Link} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import { deleteVehicles, getVehicles, updateVehicles} from "../redux/slices/vehicleReducer.ts";
+import { deleteVehicles, getVehicles} from "../redux/slices/vehicleReducer.ts";
 import {AppDispatch} from "../redux/store.ts";
+import Swal from "sweetalert2";
 
 
 export function Vehicle() {
@@ -14,12 +15,12 @@ export function Vehicle() {
     const [searchLicenseNumber,setSearchLicenseNumber] = useState('');
     const [foundVehicle,setFoundVehicle] = useState<any | null>(null);
 
-    const [NewVehicleCode,setNewVehicleCode] = useState('');
-    const [Newcategory,setNewCategory] = useState('');
-    const [NewFuelType,setNewFuelType] =useState('');
-    const [NewStatus, setNewStatus] = useState('');
-    const [NewstaffId, setNewStaffId] = useState('');
-    const [NewRemarks,setNewRemarks] = useState('');
+    const [setNewVehicleCode] = useState('');
+    const [setNewCategory] = useState('');
+    const [setNewFuelType] =useState('');
+    const [ setNewStatus] = useState('');
+    const [ setNewStaffId] = useState('');
+    const [setNewRemarks] = useState('');
 
     useEffect(() => {
         dispatch(getVehicles());
@@ -29,10 +30,20 @@ export function Vehicle() {
     function handleDeleteVehicle(event:React.FormEvent){
         event.preventDefault();
         if(!deleteVehicleId){
-            alert("Vehicle not found.");
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
         }
         dispatch(deleteVehicles(deleteVehicleId));
-        alert("Vehicle deleted successfully.");
+        Swal.fire({
+            icon: "success",
+            title: "Delete Successful!",
+            text: "Delete Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
     }
     function handleSearchVehicle(event:React.FormEvent){
         event.preventDefault();
@@ -48,27 +59,16 @@ export function Vehicle() {
 
         } else {
 
-            alert('vehicle not found.');
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
             setFoundVehicle(null);
         }
     }
-    function handleUpdateVehicle(event:React.FormEvent){
-        event.preventDefault();
-        if(foundVehicle){
-            dispatch(updateVehicles({licensePlateNumber:foundVehicle.licensePlateNumber,NewVehicleCode,Newcategory,NewStatus,NewFuelType,NewstaffId,NewRemarks}));
 
-            alert("vehicle updated successfully.");
-            setNewVehicleCode('');
-            setNewCategory('');
-            setNewStatus('');
-            setNewFuelType('');
-            setNewStaffId('')
-            setNewRemarks('');
-        }else{
-            alert("vehicle not found.");
-            setFoundVehicle(null);
-        }
-    }
 
     return (
         <>

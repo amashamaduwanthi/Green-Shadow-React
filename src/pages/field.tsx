@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 
 import {deleteField, getFields} from "../redux/slices/fieldReducer.ts";
+import Swal from "sweetalert2";
 
 
 export function Field() {
@@ -27,11 +28,21 @@ export function Field() {
     function handleDeleteField(event:React.FormEvent) {
         event.preventDefault();
         if(!deleteFieldName) {
-            alert("Field Name Not Found");
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
 
         }
         dispatch(deleteField(deleteFieldName));
-        alert("Deleted Successfully.");
+        Swal.fire({
+            icon: "success",
+            title: "Delete Successful!",
+            text: "Delete Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
     }
     function handleSearchField(event:React.FormEvent) {
         event.preventDefault();
@@ -48,13 +59,16 @@ export function Field() {
 
 
         } else {
-            alert('Field not found.');
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
             setFoundField(null);
         }
     }
-    function handleUpdateField(){
 
-    }
 
 
     return (

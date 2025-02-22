@@ -7,6 +7,8 @@ import staffReducer from "./slices/staffReducer.ts";
 import logReducer from "./slices/logReducer.ts";
 import vehicleReducer from "./slices/vehicleReducer.ts";
 import equipmentReducer from "./slices/equipmentReducer.ts";
+import UserSlice from "./slices/UserSlice.ts";
+import SignUpSlice from "./slices/SignUpSlice.ts";
 
 
 export const store = configureStore({
@@ -17,6 +19,8 @@ export const store = configureStore({
        log:logReducer,
        vehicle:vehicleReducer,
        staff:staffReducer,
+      users : UserSlice,
+      signUp:SignUpSlice,
   },
 });
 

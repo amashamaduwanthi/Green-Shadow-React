@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {deleteVehicles, getVehicles, saveVehicle, updateVehicles} from "../redux/slices/vehicleReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import { Vehicle } from "../model/Vehicle.ts";
-
+import {deleteLogs, getLogs} from "../redux/slices/logReducer.ts";
+import Swal from "sweetalert2";
 function AddNewVehicle() {
     const vehicles = useSelector((state: any) => state.vehicle);
     const dispatch = useDispatch<AppDispatch>();
@@ -16,7 +17,7 @@ function AddNewVehicle() {
     const [status, setStatus] = useState("");
     const [staffId, setStaffId] = useState("");
     const [remarks, setRemarks] = useState("");
-    const [deleteVehicleId, setDeleteVehicleId] = useState('');
+
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
@@ -30,7 +31,12 @@ function AddNewVehicle() {
         }
         const newVehicle = new Vehicle(vehicleCode, licensePlateNo, category, fuelType, status, remarks, staffId);
         dispatch(saveVehicle(newVehicle));
-        alert("Vehicle added successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Adding Successful!",
+            text: "Vehicle Added Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         resetForm();
     };
 
@@ -60,23 +66,40 @@ function AddNewVehicle() {
             remarks,
         };
         dispatch(updateVehicles(updatedVehicle));
-        alert("Vehicle updated successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Update Successful!",
+            text: "Vehicle Update Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         dispatch(getVehicles())
 
         resetForm();
     };
 
 
-    const handleDelete = () => {
-        event.preventDefault();
-        if(!deleteVehicleId){
-            alert("Vehicle not found.");
+    const handleDelete = (licenseNo: string) => {
+        if (window.confirm("Are you sure you want to delete this vehicle?")) {
+            dispatch(deleteVehicles(licenseNo));
+            alert("vehicles deleted successfully!");
+            dispatch(getVehicles());
         }
-        dispatch(deleteVehicles(deleteVehicleId));
-        alert("Vehicle deleted successfully.");
     };
 
-    const resetForm = () => {
+
+
+    const resetForm = () => {const handleDelete = (code: string) => {
+        if (window.confirm("Are you sure you want to delete this log?")) {
+            dispatch(deleteLogs(code));
+            Swal.fire({
+                icon: "success",
+                title: "Delete Successful!",
+                text: "Vehicle Delete Successfully!",
+                confirmButtonColor: "#3085d6",
+            })
+            dispatch(getLogs());
+        }
+    };
         setVehicleCode("");
         setLicensePlateNo("");
         setCategory("");
@@ -143,7 +166,7 @@ function AddNewVehicle() {
                         <td className="border px-4 py-2">{vehicle.staffId}</td>
 
                         <td className="border px-4 py-2 text-center">
-                            <button onClick={() => handleDelete(vehicle.vehicleCode)}
+                            <button onClick={() => handleDelete(vehicle.licensePlateNo)}
                                     className="bg-red-500 text-white p-2 rounded-lg">
                                 <Trash2/>
                             </button>

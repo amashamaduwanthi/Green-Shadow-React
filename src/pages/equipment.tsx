@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {deleteEquipments, getEquipments} from "../redux/slices/equipmentReducer.ts";
 import {AppDispatch} from "../redux/store.ts";
+import Swal from "sweetalert2";
 
 
 export function Equipment(){
@@ -27,10 +28,20 @@ export function Equipment(){
     function handleDeleteEquipment(event: React.FormEvent){
         event.preventDefault();
         if(!deleteEquipmentId){
-            alert("Equipment Not Found");
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
         }
         dispatch(deleteEquipments(deleteEquipmentId));
-        alert("Equipment Deleted");
+        Swal.fire({
+            icon: "success",
+            title: "Delete Successful!",
+            text: "Delete Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
     }
     function handleSearchEquipment(event: React.FormEvent){
         event.preventDefault();
@@ -46,12 +57,17 @@ export function Equipment(){
 
 
         } else {
-            alert('Equipment not found.');
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
             setFoundEquipment(null);
         }
 
     }
-    function handleUpdateEquipment(){}
+
 
 
     return (

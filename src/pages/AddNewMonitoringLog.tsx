@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {deleteLogs, getLogs, saveLog, updateLog} from "../redux/slices/logReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import MonitoringLog from "../model/Log.ts";
-
+import Swal from "sweetalert2";
 
 function AddNewMonitoringLog() {
     const logs = useSelector((state: any) => state.log);
     const dispatch = useDispatch<AppDispatch>();
 
-    const [logCode, setLogCode] = useState("");
+    const [LogCode, setLogCode] = useState("");
     const [date, setDate] = useState("");
     const [observation, setObservation] = useState("");
-    const [logImage, setLogImage] = useState("");
+    const [LogImage, setLogImage] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -22,13 +22,18 @@ function AddNewMonitoringLog() {
     }, [dispatch]);
 
     const handleAdd = () => {
-        if (!logCode || !date || !observation || !logImage) {
+        if (!LogCode || !date || !observation || !LogImage) {
             alert("All fields are required!");
             return;
         }
-        const newLog = new MonitoringLog(logCode, date, observation, logImage);
+        const newLog = new MonitoringLog(LogCode, date, observation, LogImage);
         dispatch(saveLog(newLog));
-        alert("New log was added successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Adding Successful!",
+            text: "Log Added Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         resetForm();
     };
 
@@ -41,27 +46,37 @@ function AddNewMonitoringLog() {
     };
 
     const handleUpdate = () => {
-        if (!logCode || !date || !observation || !logImage) {
+        if (!LogCode || !date || !observation || !LogImage) {
             alert("All fields are required!");
             return;
         }
         const updatedLog = {
-            logCode,
+            LogCode,
             date,
             observation,
-            logImage,
+            LogImage,
         };
         dispatch(updateLog(updatedLog));
-        alert("Log updated successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Update Successful!",
+            text: "Log Update Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         dispatch(getLogs());
         resetForm();
     };
 
 
-    const handleDelete = (logCode: string) => {
+    const handleDelete = (code: string) => {
         if (window.confirm("Are you sure you want to delete this log?")) {
-            dispatch(deleteLogs(logCode));
-            alert("Log deleted successfully!");
+            dispatch(deleteLogs(code));
+            Swal.fire({
+                icon: "success",
+                title: "Delete Successful!",
+                text: "Log Delete Successfully!",
+                confirmButtonColor: "#3085d6",
+            })
             dispatch(getLogs());
         }
     };
@@ -77,10 +92,10 @@ function AddNewMonitoringLog() {
     return (
         <div className="p-6">
             <div className="grid grid-cols-2 gap-4 mb-4">
-                <input type="text" placeholder="Log Code" value={logCode} onChange={(e) => setLogCode(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Log Code" value={LogCode} onChange={(e) => setLogCode(e.target.value)} className="border p-2 rounded" />
                 <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="border p-2 rounded" />
                 <input type="text" placeholder="Observation" value={observation} onChange={(e) => setObservation(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="Image URL" value={logImage} onChange={(e) => setLogImage(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Image URL" value={LogImage} onChange={(e) => setLogImage(e.target.value)} className="border p-2 rounded" />
             </div>
             <div className="flex justify-end">
                 {isEditing ? (
@@ -111,7 +126,7 @@ function AddNewMonitoringLog() {
                         <td className="border px-4 py-2">{log.observation}</td>
                         <td className="border px-4 py-2">{log.LogImage}</td>
                         <td className="border px-4 py-2 text-center">
-                            <button onClick={() => handleDelete(log.logCode)} className="bg-red-500 text-white p-2 rounded-lg">
+                            <button onClick={() => handleDelete(log.LogCode)} className="bg-red-500 text-white p-2 rounded-lg">
                                 <Trash2 />
                             </button>
                         </td>

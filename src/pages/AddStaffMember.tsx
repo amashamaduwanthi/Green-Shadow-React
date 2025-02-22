@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {deleteStaffMember, getStaffMembers, saveStaff, updateStaffMember} from "../redux/slices/staffReducer.ts";
 import { AppDispatch } from "../redux/store.ts";
 import { Staff } from "../model/Staff.ts";
+import Swal from "sweetalert2";
 
 function AddStaffMember() {
     const staff = useSelector((state: any) => state.staff);
@@ -40,7 +41,12 @@ function AddStaffMember() {
 
         const newStaff = new Staff(staffId, firstName, lastName, gender, parsedDob, Number(contact), email, address, role, fieldCode);
         dispatch(saveStaff(newStaff));
-        alert("Staff added successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Adding Successful!",
+            text: "Staff Added Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         resetForm();
     };
 
@@ -81,7 +87,12 @@ function AddStaffMember() {
             fieldCode,
         };
         dispatch(updateStaffMember(updatedStaff));
-        alert("Staff details updated successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Update Successful!",
+            text: "Staff Update Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         dispatch(getStaffMembers());
         resetForm();
     };
@@ -90,7 +101,12 @@ function AddStaffMember() {
     const handleDelete = (staffId: string) => {
         if (window.confirm("Are you sure you want to delete this staff member?")) {
             dispatch(deleteStaffMember(staffId));
-            alert("staff deleted successfully!");
+            Swal.fire({
+                icon: "success",
+                title: "Delete Successful!",
+                text: "Staff Delete Successfully!",
+                confirmButtonColor: "#3085d6",
+            })
             dispatch(getStaffMembers());
         }
     };

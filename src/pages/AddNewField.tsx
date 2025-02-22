@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {deleteField, getFields, saveField, updateField} from "../redux/slices/fieldReducer.ts";
 import {AppDispatch} from "../redux/store.ts";
 import {Field} from "../model/Field.ts";
-
+import Swal from "sweetalert2";
 function AddNewField() {
     const fields = useSelector((state: any) => state.field);
     const dispatch = useDispatch<AppDispatch>();
@@ -29,7 +29,12 @@ function AddNewField() {
         }
         const newField=new Field(fieldCode, fieldName, location, extentSize, fieldImage);
         dispatch(saveField(newField));
-        alert("field was added successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Adding Successful!",
+            text: "Fields Added Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         resetForm();
     };
 
@@ -59,7 +64,12 @@ function AddNewField() {
 
         // Dispatch an update action (assuming you have an updateField action in Redux)
         dispatch(updateField(updatedField));
-        alert("Field updated successfully!");
+        Swal.fire({
+            icon: "success",
+            title: "Update Successful!",
+            text: "Field was updated successfully!",
+            confirmButtonColor: "#3085d6",
+        })
         dispatch(getFields())
         // Reset the form after update
         resetForm();
@@ -69,7 +79,12 @@ function AddNewField() {
     const handleDelete = (fieldCode: string) => {
         if (window.confirm("Are you sure you want to delete this field?")) {
             dispatch(deleteField(fieldCode));
-            alert("Field delete successfully!");
+            Swal.fire({
+                icon: "success",
+                title: "Delete Successful!",
+                text: "Fields Deleted Successfully!",
+                confirmButtonColor: "#3085d6",
+            })
             dispatch(getFields())
         }
     };

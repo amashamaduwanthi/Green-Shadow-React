@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {deleteLogs,  getLogs} from "../redux/slices/logReducer.ts";
 import {AppDispatch} from "../redux/store.ts";
+import Swal from "sweetalert2";
 
 
 export function Log(){
@@ -27,11 +28,21 @@ export function Log(){
     function handleDeleteLog(event:React.FormEvent){
         event.preventDefault();
         if(!deleteLogCode){
-            alert("Log Not Found");
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
 
         }
         dispatch(deleteLogs(deleteLogCode));
-        alert("Deleted Successfully.");
+        Swal.fire({
+            icon: "success",
+            title: "Delete Successful!",
+            text: "Delete Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
     }
     function handleSearchLog(event:React.FormEvent){
         event.preventDefault();
@@ -44,11 +55,16 @@ export function Log(){
 
 
         } else {
-            alert('log not found.');
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
             setFoundLog(null);
         }
     }
-    function handleUpdateLog(){}
+
 
     return (
         <>

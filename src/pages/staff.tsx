@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {deleteStaffMember, getStaffMembers} from "../redux/slices/staffReducer.ts";
 import {AppDispatch} from "../redux/store.ts";
+import Swal from "sweetalert2";
 
 
 export function Staff() {
@@ -46,18 +47,33 @@ export function Staff() {
             setNewVehicleId(found.VehicleCode);
         } else {
             alert('staff not found.');
-            setFoundStaff(null);
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
         }
     }
 
     function handleDeleteStaffMember(event:React.FormEvent) {
         event.preventDefault();
         if(!deleteStaffId) {
-            alert("Staff Not Found!");
+            Swal.fire({
+                icon: "Not Found",
+                title: "Not Found!",
+                text: "Not Found!",
+                confirmButtonColor: "#3085d6",
+            })
 
         }
         dispatch(deleteStaffMember(deleteStaffId));
-        alert("Deleted Successfully");
+        Swal.fire({
+            icon: "success",
+            title: "Delete Successful!",
+            text: "Delete Successfully!",
+            confirmButtonColor: "#3085d6",
+        })
 
     }
 
