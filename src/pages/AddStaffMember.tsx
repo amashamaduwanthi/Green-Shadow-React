@@ -128,16 +128,35 @@ function AddStaffMember() {
     return (
         <div className="p-6">
             <div className="grid grid-cols-2 gap-4 mb-4">
-                <input type="text" placeholder="Staff ID" value={staffId} onChange={(e) => setStaffId(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="Gender" value={gender} onChange={(e) => setGender(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="DOB" value={dob} onChange={(e) => setDob(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="Contact No" value={contact} onChange={(e) => setContact(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="Role" value={role} onChange={(e) => setRole(e.target.value)} className="border p-2 rounded" />
-                <input type="text" placeholder="Field Code" value={fieldCode} onChange={(e) => setFieldCode(e.target.value)} className="border p-2 rounded" />
+                <input type="text" placeholder="Staff ID" value={staffId} onChange={(e) => setStaffId(e.target.value)}
+                       className="border p-2 rounded"/>
+                <input type="text" placeholder="First Name" value={firstName}
+                       onChange={(e) => setFirstName(e.target.value)} className="border p-2 rounded"/>
+                <input type="text" placeholder="Last Name" value={lastName}
+                       onChange={(e) => setLastName(e.target.value)} className="border p-2 rounded"/>
+                <select value={gender} onChange={(e) => setGender(e.target.value)} className="border p-2 rounded">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <input
+                    type="datetime-local"
+                    value={dob}
+                    onChange={(e) => setDob(e.target.value)}
+                    className="border p-2 rounded"
+                />
+
+                <input type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)}
+                       className="border p-2 rounded"/>
+                <input type="text" placeholder="Contact No" value={contact} onChange={(e) => setContact(e.target.value)}
+                       className="border p-2 rounded"/>
+                <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
+                       className="border p-2 rounded"/>
+                <input type="text" placeholder="Role" value={role} onChange={(e) => setRole(e.target.value)}
+                       className="border p-2 rounded"/>
+                <input type="text" placeholder="Field Code" value={fieldCode}
+                       onChange={(e) => setFieldCode(e.target.value)} className="border p-2 rounded"/>
             </div>
             <div className="flex justify-end">
                 {isEditing ? (
